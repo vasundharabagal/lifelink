@@ -14,7 +14,7 @@ LIFELINK is implemented in 12 sequential, verifiable phases matching Section 18 
 - [x] **Phase 0: Walking skeleton and deployment spike** - Prove stack deploys and talks to DB on Vercel before feature work (completed 2026-09-30)
 - [x] **Phase 1: Domain model, migrations, clock, seeds** - Implement 11 database tables, constraints, Clock, and persona seeds (completed 2026-10-01)
 - [x] **Phase 2: Auth, RBAC, authorization, audit, rate limiting** - Secure access foundation, session cookies, central authz, and audit logs (completed 2026-10-01)
-- [ ] **Phase 3: Protocol library, triage engine, golden set, LLM adapter** - Safe deterministic triage rules, protocol library, and golden CI eval
+- [x] **Phase 3: Protocol library, triage engine, golden set, LLM adapter** - Safe deterministic triage rules, protocol library, and golden CI eval (completed 2026-10-01)
 - [ ] **Phase 4: Orchestration engine (pure logic)** - Hard eligibility filters, 0-100 scoring, explainability, and ambulance ranking
 - [ ] **Phase 5: Emergency lifecycle, state machine, offers, lazy advance** - Transactional core, dual-track machine, offer mutations, and lazy advance
 - [ ] **Phase 6: Frontend foundation and citizen SOS flow** - Accessible light-theme citizen SOS flow with offline protocol cards
@@ -119,13 +119,13 @@ Plans:
 4. Optional LLM extractor validates against closed enums, times out cleanly at 4 s, and respects the escalate-only invariant
 5. Golden test suite of 40+ cases passes in CI with >=0.95 red-flag recall and 0 unsafe downgrades
 
-**Plans:** 3 plans defined
+**Plans:** 3/3 plans complete
 
 Plans:
 
-- [ ] 03-01: Author protocol JSON library, input sanitizer, and deterministic table-driven rules engine
-- [ ] 03-02: Implement optional Tier 2 LLM extractor with closed-enum parsing and prompt injection defense
-- [ ] 03-03: Create 40+ case golden triage evaluation suite and verify zero-downgrade CI test gates
+- [x] 03-01: Author protocol JSON library, input sanitizer, and deterministic table-driven rules engine
+- [x] 03-02: Implement optional Tier 2 LLM extractor with closed-enum parsing and prompt injection defense
+- [x] 03-03: Create 40+ case golden triage evaluation suite and verify zero-downgrade CI test gates
 
 ### Phase 4: Orchestration engine (pure logic)
 

@@ -15,28 +15,28 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Domain Model & Data Primitives (`DATA`)
 
-- [ ] **DATA-01**: Database enforces 11 relational tables matching spec Section 7 via Alembic migrations
-- [ ] **DATA-02**: Database enforces partial unique indexes preventing multiple active offers per responder, per track, and active emergencies per patient
-- [ ] **DATA-03**: Database enforces append-only protection on `emergency_events` and `audit_logs` rejecting UPDATE and DELETE queries
-- [ ] **DATA-04**: Domain logic uses injectable `Clock` supporting test offsets and forbids direct `datetime.now()` calls
-- [ ] **DATA-05**: Seed script idempotently provisions taxonomy from `shared/taxonomy.json` and demo persona templates (Appendix B)
+- [x] **DATA-01**: Database enforces 11 relational tables matching spec Section 7 via Alembic migrations
+- [x] **DATA-02**: Database enforces partial unique indexes preventing multiple active offers per responder, per track, and active emergencies per patient
+- [x] **DATA-03**: Database enforces append-only protection on `emergency_events` and `audit_logs` rejecting UPDATE and DELETE queries
+- [x] **DATA-04**: Domain logic uses injectable `Clock` supporting test offsets and forbids direct `datetime.now()` calls
+- [x] **DATA-05**: Seed script idempotently provisions taxonomy from `shared/taxonomy.json` and demo persona templates (Appendix B)
 
 ### Authentication, Authorization & Security (`AUTH`)
 
-- [ ] **AUTH-01**: Citizen and responder users can register with email and password hashed using argon2id
-- [ ] **AUTH-02**: Users can authenticate via email/password receiving an httpOnly SameSite=Strict cookie JWT (`ll_session`)
-- [ ] **AUTH-03**: System enforces role-based access control (`require_role`) across all non-public endpoints with automated route enumeration testing
-- [ ] **AUTH-04**: Centralized object-level authorization (`services/authz.py`) strictly enforces ownership, incident access, and tenant scope isolation
-- [ ] **AUTH-05**: System records immutable audit logs for logins, verification decisions, and non-patient reads of exact location or medical data
-- [ ] **AUTH-06**: System enforces rate limiting on login attempts and SOS creation calculated from database audit history
+- [x] **AUTH-01**: Citizen and responder users can register with email and password hashed using argon2id
+- [x] **AUTH-02**: Users can authenticate via email/password receiving an httpOnly SameSite=Strict cookie JWT (`ll_session`)
+- [x] **AUTH-03**: System enforces role-based access control (`require_role`) across all non-public endpoints with automated route enumeration testing
+- [x] **AUTH-04**: Centralized object-level authorization (`services/authz.py`) strictly enforces ownership, incident access, and tenant scope isolation
+- [x] **AUTH-05**: System records immutable audit logs for logins, verification decisions, and non-patient reads of exact location or medical data
+- [x] **AUTH-06**: System enforces rate limiting on login attempts and SOS creation calculated from database audit history
 
 ### Triage & Clinical Protocols (`TRIAGE`)
 
-- [ ] **TRIAGE-01**: System bundles pre-reviewed first-aid protocol JSONs in `shared/protocols/*.json` with clinical citations and explicit unreviewed demo disclaimers
-- [ ] **TRIAGE-02**: Deterministic rules engine classifies priority (P1/P2/P3), ambulance requirement, protocol ID, and required skill levels from structured inputs
-- [ ] **TRIAGE-03**: Triage rules engine enforces precedence (`UNRESPONSIVE`/`NOT_BREATHING` > `CHOKING` > `SEVERE_BLEEDING` > `SEIZURE` > `FALL` > `BURNS` > `GENERAL`) and fail-safe upward escalation
-- [ ] **TRIAGE-04**: Optional Tier 2 LLM extractor maps free text to closed enums with a 4 s timeout and strict escalate-only invariant
-- [ ] **TRIAGE-05**: Automated evaluation script runs 40+ golden triage cases in CI, enforcing >=0.95 red-flag recall and zero unsafe downgrades
+- [x] **TRIAGE-01**: System bundles pre-reviewed first-aid protocol JSONs in `shared/protocols/*.json` with clinical citations and explicit unreviewed demo disclaimers
+- [x] **TRIAGE-02**: Deterministic rules engine classifies priority (P1/P2/P3), ambulance requirement, protocol ID, and required skill levels from structured inputs
+- [x] **TRIAGE-03**: Triage rules engine enforces precedence (`UNRESPONSIVE`/`NOT_BREATHING` > `CHOKING` > `SEVERE_BLEEDING` > `SEIZURE` > `FALL` > `BURNS` > `GENERAL`) and fail-safe upward escalation
+- [x] **TRIAGE-04**: Optional Tier 2 LLM extractor maps free text to closed enums with a 4 s timeout and strict escalate-only invariant
+- [x] **TRIAGE-05**: Automated evaluation script runs 40+ golden triage cases in CI, enforcing >=0.95 red-flag recall and zero unsafe downgrades
 
 ### Response Orchestration Engine (`ORCH`)
 
@@ -144,22 +144,22 @@ Which phases cover which requirements. Populated during roadmap creation.
 | INFRA-01 | Phase 0 | Complete |
 | INFRA-02 | Phase 0 | Complete |
 | INFRA-03 | Phase 0 | Complete |
-| DATA-01 | Phase 1 | Pending |
-| DATA-02 | Phase 1 | Pending |
-| DATA-03 | Phase 1 | Pending |
-| DATA-04 | Phase 1 | Pending |
-| DATA-05 | Phase 1 | Pending |
-| AUTH-01 | Phase 2 | Pending |
-| AUTH-02 | Phase 2 | Pending |
-| AUTH-03 | Phase 2 | Pending |
-| AUTH-04 | Phase 2 | Pending |
-| AUTH-05 | Phase 2 | Pending |
-| AUTH-06 | Phase 2 | Pending |
-| TRIAGE-01 | Phase 3 | Pending |
-| TRIAGE-02 | Phase 3 | Pending |
-| TRIAGE-03 | Phase 3 | Pending |
-| TRIAGE-04 | Phase 3 | Pending |
-| TRIAGE-05 | Phase 3 | Pending |
+| DATA-01 | Phase 1 | Complete |
+| DATA-02 | Phase 1 | Complete |
+| DATA-03 | Phase 1 | Complete |
+| DATA-04 | Phase 1 | Complete |
+| DATA-05 | Phase 1 | Complete |
+| AUTH-01 | Phase 2 | Complete |
+| AUTH-02 | Phase 2 | Complete |
+| AUTH-03 | Phase 2 | Complete |
+| AUTH-04 | Phase 2 | Complete |
+| AUTH-05 | Phase 2 | Complete |
+| AUTH-06 | Phase 2 | Complete |
+| TRIAGE-01 | Phase 3 | Complete |
+| TRIAGE-02 | Phase 3 | Complete |
+| TRIAGE-03 | Phase 3 | Complete |
+| TRIAGE-04 | Phase 3 | Complete |
+| TRIAGE-05 | Phase 3 | Complete |
 | ORCH-01 | Phase 4 | Pending |
 | ORCH-02 | Phase 4 | Pending |
 | ORCH-03 | Phase 4 | Pending |
