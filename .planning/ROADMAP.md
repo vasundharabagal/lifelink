@@ -71,8 +71,16 @@ Plans:
 
 Plans:
 
+**Wave 1**
+
 - [ ] 01-01: Define taxonomy JSON and SQLAlchemy models for all 11 tables with constraints and triggers
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 01-02: Create Alembic migrations and verify migration up/down constraint validation tests
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
 - [ ] 01-03: Implement Clock abstraction and idempotent seed script for demo personas and taxonomy
 
 ### Phase 2: Auth, RBAC, authorization, audit, rate limiting
