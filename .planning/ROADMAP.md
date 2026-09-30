@@ -163,13 +163,13 @@ Plans:
 4. Decline, timeout (`OFFER_TTL_S`), or scene-unsafe abort immediately cascades to candidate #2
 5. Location privacy tiers provide coarse coordinates (~250 m) before accept and exact coordinates only upon accept
 
-**Plans:** 3 plans
+**Plans:** 3/3 plans complete
 
 Plans:
 
-- [ ] 05-01: Implement composite state machine and emergency creation with idempotency and deduplication
-- [ ] 05-02: Implement lazy deterministic `advance()` evaluation under PostgreSQL row locks
-- [ ] 05-03: Implement offer lifecycle endpoints, location privacy tiering, and simulated movement
+- [x] 05-01: Implement composite state machine and emergency creation with idempotency and deduplication
+- [x] 05-02: Implement lazy deterministic `advance()` evaluation under PostgreSQL row locks
+- [x] 05-03: Implement offer lifecycle endpoints, location privacy tiering, and simulated movement
 
 ### Phase 6: Frontend foundation and citizen SOS flow
 

@@ -47,13 +47,13 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Emergency Lifecycle & Dual-Track Dispatch (`CORE`)
 
-- [ ] **CORE-01**: Citizen can create emergency with `Idempotency-Key` initiating parallel community volunteer and professional ambulance tracks
-- [ ] **CORE-02**: System deduplicates near-simultaneous reports within 150 m and 10 minutes, returning `409 POSSIBLE_DUPLICATE` with linking options
-- [ ] **CORE-03**: Lazy deterministic evaluation (`advance(emergency_id)`) advances expired offers and updates composite state machines under row locks during client polling
-- [ ] **CORE-04**: Assigned candidate can accept, decline (with reason), report scene arrival, or complete assignment with quick action checklist
-- [ ] **CORE-05**: Declining, timing out (`OFFER_TTL_S`), or aborting an offer cascades dispatch to the next eligible candidate in the dispatch plan
-- [ ] **CORE-06**: Citizen or authority can cancel active emergency or resolve incident, safely closing open offers and updating track states
-- [ ] **CORE-07**: Location privacy tiers ensure candidates receive coarse coordinates (~250 m) before accept, exact coordinates only upon accept, and immediate revocation at close
+- [x] **CORE-01**: Citizen can create emergency with `Idempotency-Key` initiating parallel community volunteer and professional ambulance tracks
+- [x] **CORE-02**: System deduplicates near-simultaneous reports within 150 m and 10 minutes, returning `409 POSSIBLE_DUPLICATE` with linking options
+- [x] **CORE-03**: Lazy deterministic evaluation (`advance(emergency_id)`) advances expired offers and updates composite state machines under row locks during client polling
+- [x] **CORE-04**: Assigned candidate can accept, decline (with reason), report scene arrival, or complete assignment with quick action checklist
+- [x] **CORE-05**: Declining, timing out (`OFFER_TTL_S`), or aborting an offer cascades dispatch to the next eligible candidate in the dispatch plan
+- [x] **CORE-06**: Citizen or authority can cancel active emergency or resolve incident, safely closing open offers and updating track states
+- [x] **CORE-07**: Location privacy tiers ensure candidates receive coarse coordinates (~250 m) before accept, exact coordinates only upon accept, and immediate revocation at close
 
 ### Citizen SOS Interface (`CITIZEN`)
 
