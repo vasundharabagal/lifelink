@@ -1,5 +1,4 @@
-"""Authentication API endpoints (Spec §8.1)."""
-from fastapi import APIRouter, Depends, HTTPException, Response, status
+from fastapi import APIRouter, Depends, HTTPException, Request, Response, status
 from sqlalchemy.orm import Session
 
 from app.api.deps import (
@@ -7,6 +6,7 @@ from app.api.deps import (
     set_session_cookie,
     clear_session_cookie,
 )
+from app.core.clock import Clock, get_clock
 from app.core.db import get_db
 from app.core.security import hash_password, verify_password, create_access_token
 from app.models.user import User, MedicalProfile
@@ -19,6 +19,12 @@ from app.schemas.auth import (
     UserMeResponse,
     ResponderProfileSummary,
 )
+from app.services.audit import (
+    extract_client_ip,
+    log_login_attempt,
+    log_security_event,
+)
+from app.services.rate_limiter import check_login_rate_limit
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -31,8 +37,10 @@ router = APIRouter(prefix="/auth", tags=["auth"])
 )
 def register(
     body: UserRegisterRequest,
+    request: Request,
     response: Response,
     db: Session = Depends(get_db),
+    clock: Clock = Depends(get_clock),
 ):
     """Register a new user account.
     
@@ -79,6 +87,18 @@ def register(
     db.commit()
     db.refresh(user)
 
+    log_security_event(
+        action="auth_register",
+        resource_type="user",
+        resource_id=user.email,
+        outcome="allow",
+        actor_user_id=user.id,
+        actor_role=user.role,
+        client_ip=extract_client_ip(request),
+        at=clock.now(user.demo_session_id, db),
+        db=db,
+    )
+
     token = create_access_token(
         user_id=user.id,
         role=user.role,
@@ -100,22 +120,55 @@ def register(
 )
 def login(
     body: UserLoginRequest,
+    request: Request,
     response: Response,
     db: Session = Depends(get_db),
+    clock: Clock = Depends(get_clock),
 ):
-    """Authenticate and receive session cookie and token (AUTH-02)."""
-    user = db.query(User).filter(User.email == body.email).first()
+    """Authenticate and receive session cookie and token (AUTH-02, AUTH-06)."""
+    normalized_email = body.email.strip().lower()
+    user = db.query(User).filter(User.email == normalized_email).first()
+    demo_session_id = user.demo_session_id if user else None
+
+    # Check login rate limit (AUTH-06, D-31)
+    check_login_rate_limit(normalized_email, db, clock, demo_session_id=demo_session_id)
+
     if not user or not verify_password(body.password, user.password_hash):
+        log_login_attempt(
+            email=normalized_email,
+            success=False,
+            user=user,
+            request=request,
+            clock=clock,
+            db=db,
+        )
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail={"error": {"code": "UNAUTHENTICATED", "message": "Invalid email or password"}},
         )
 
     if not user.is_active:
+        log_login_attempt(
+            email=normalized_email,
+            success=False,
+            user=user,
+            request=request,
+            clock=clock,
+            db=db,
+        )
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail={"error": {"code": "UNAUTHENTICATED", "message": "Account is suspended or deactivated"}},
         )
+
+    log_login_attempt(
+        email=normalized_email,
+        success=True,
+        user=user,
+        request=request,
+        clock=clock,
+        db=db,
+    )
 
     token = create_access_token(
         user_id=user.id,
@@ -135,9 +188,16 @@ def login(
     status_code=status.HTTP_204_NO_CONTENT,
     summary="Log out and clear session cookie",
 )
-def logout(response: Response):
+def logout(request: Request, response: Response):
     """Clear session cookie."""
     clear_session_cookie(response)
+    log_security_event(
+        action="auth_logout",
+        resource_type="session",
+        resource_id="session",
+        outcome="allow",
+        client_ip=extract_client_ip(request),
+    )
     response.status_code = status.HTTP_204_NO_CONTENT
     return response
 

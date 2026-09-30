@@ -16,6 +16,7 @@ from app.domain.enums import UserRole, OfferStatus, TargetKind
 from app.models.user import User, MedicalProfile
 from app.models.emergency import Emergency, DispatchOffer
 from app.models.ambulance import AmbulanceUnit
+from app.services.audit import log_authz_denial, log_sensitive_data_read
 
 
 def check_tenant_scope(user: User, resource_demo_session_id: Optional[uuid.UUID]) -> bool:
@@ -31,6 +32,7 @@ def assert_can_view_emergency(user: User, emergency: Emergency, db: Session) -> 
     """
     # 1. Tenant boundary check
     if not check_tenant_scope(user, emergency.demo_session_id):
+        log_authz_denial(actor=user, resource_type="emergency", resource_id=str(emergency.id), db=db)
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail={"error": {"code": "NOT_FOUND", "message": "Emergency not found"}},
@@ -72,6 +74,7 @@ def assert_can_view_emergency(user: User, emergency: Emergency, db: Session) -> 
             return
 
     # 6. Anti-enumeration defense: return 404 rather than 403
+    log_authz_denial(actor=user, resource_type="emergency", resource_id=str(emergency.id), db=db)
     raise HTTPException(
         status_code=status.HTTP_404_NOT_FOUND,
         detail={"error": {"code": "NOT_FOUND", "message": "Emergency not found"}},
@@ -90,6 +93,7 @@ def assert_can_act_on_offer(user: User, offer: DispatchOffer, db: Session) -> No
         emergency = db.query(Emergency).filter(Emergency.id == offer.emergency_id).first()
 
     if emergency is None or not check_tenant_scope(user, emergency.demo_session_id):
+        log_authz_denial(actor=user, resource_type="offer", resource_id=str(offer.id), db=db)
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail={"error": {"code": "NOT_FOUND", "message": "Offer not found"}},
@@ -98,6 +102,7 @@ def assert_can_act_on_offer(user: User, offer: DispatchOffer, db: Session) -> No
     # Target kind validation
     if offer.target_kind == TargetKind.RESPONDER.value or offer.responder_id is not None:
         if offer.responder_id != user.id:
+            log_authz_denial(actor=user, resource_type="offer", resource_id=str(offer.id), db=db)
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
                 detail={"error": {"code": "FORBIDDEN", "message": "Offer not assigned to this responder"}},
@@ -108,6 +113,7 @@ def assert_can_act_on_offer(user: User, offer: DispatchOffer, db: Session) -> No
             ambulance = db.query(AmbulanceUnit).filter(AmbulanceUnit.id == offer.ambulance_id).first()
 
         if ambulance is None or ambulance.operator_user_id != user.id:
+            log_authz_denial(actor=user, resource_type="offer", resource_id=str(offer.id), db=db)
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
                 detail={"error": {"code": "FORBIDDEN", "message": "Offer not assigned to this ambulance operator"}},
@@ -123,7 +129,7 @@ def assert_can_view_medical(
     """Determine whether the caller is authorized to view patient medical profile (Spec §10.2).
     
     Medical profiles are strictly private and gated by explicit patient consent
-    and accepted response assignment.
+    and accepted response assignment. Non-patient reads are audited.
     """
     if medical_profile is None:
         return False
@@ -141,6 +147,7 @@ def assert_can_view_medical(
 
     # Authorities have access during active emergency when consent is granted
     if user.role == UserRole.AUTHORITY.value:
+        log_sensitive_data_read(actor=user, emergency_id=emergency.id, data_type="medical_profile", db=db)
         return True
 
     # Assigned responder with accepted offer
@@ -154,7 +161,10 @@ def assert_can_view_medical(
             )
             .first()
         )
-        return accepted is not None
+        if accepted is not None:
+            log_sensitive_data_read(actor=user, emergency_id=emergency.id, data_type="medical_profile", db=db)
+            return True
+        return False
 
     # Assigned ambulance operator with accepted offer
     if user.role == UserRole.AMBULANCE_OPERATOR.value:
@@ -168,6 +178,62 @@ def assert_can_view_medical(
             )
             .first()
         )
-        return accepted is not None
+        if accepted is not None:
+            log_sensitive_data_read(actor=user, emergency_id=emergency.id, data_type="medical_profile", db=db)
+            return True
+        return False
+
+    return False
+
+
+def assert_can_view_exact_location(
+    user: User,
+    emergency: Emergency,
+    db: Session,
+) -> bool:
+    """Authorize access to exact incident coordinates (Spec §10.2, D-36).
+    
+    Exact location is gated by accepted response and always audited for non-patients.
+    """
+    if not check_tenant_scope(user, emergency.demo_session_id):
+        return False
+
+    if user.id in (emergency.patient_user_id, emergency.reported_by_user_id):
+        return True
+
+    if user.role == UserRole.AUTHORITY.value:
+        log_sensitive_data_read(actor=user, emergency_id=emergency.id, data_type="exact_location", db=db)
+        return True
+
+    # Check accepted responder
+    if user.role == UserRole.RESPONDER.value:
+        accepted = (
+            db.query(DispatchOffer)
+            .filter(
+                DispatchOffer.emergency_id == emergency.id,
+                DispatchOffer.responder_id == user.id,
+                DispatchOffer.status == OfferStatus.ACCEPTED.value,
+            )
+            .first()
+        )
+        if accepted is not None:
+            log_sensitive_data_read(actor=user, emergency_id=emergency.id, data_type="exact_location", db=db)
+            return True
+
+    # Check accepted ambulance operator
+    if user.role == UserRole.AMBULANCE_OPERATOR.value:
+        accepted = (
+            db.query(DispatchOffer)
+            .join(AmbulanceUnit, DispatchOffer.ambulance_id == AmbulanceUnit.id)
+            .filter(
+                DispatchOffer.emergency_id == emergency.id,
+                AmbulanceUnit.operator_user_id == user.id,
+                DispatchOffer.status == OfferStatus.ACCEPTED.value,
+            )
+            .first()
+        )
+        if accepted is not None:
+            log_sensitive_data_read(actor=user, emergency_id=emergency.id, data_type="exact_location", db=db)
+            return True
 
     return False

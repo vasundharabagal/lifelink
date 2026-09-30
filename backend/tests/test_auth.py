@@ -7,20 +7,6 @@ from app.models.user import User
 from app.core.security import hash_password, create_access_token
 
 
-@pytest.fixture
-def client(db_session):
-    def _override_get_db():
-        try:
-            yield db_session
-        finally:
-            pass
-
-    app.dependency_overrides[get_db] = _override_get_db
-    with TestClient(app) as test_client:
-        yield test_client
-    app.dependency_overrides.clear()
-
-
 def test_register_citizen_success(client):
     """Verify citizen registration returns 201, sets session cookie, and stores Argon2 hash (AUTH-01)."""
     email = f"citizen_{uuid.uuid4().hex[:8]}@example.com"
