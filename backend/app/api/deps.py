@@ -8,6 +8,7 @@ from sqlalchemy.orm import Session
 from app.core.config import settings
 from app.core.db import get_db
 from app.core.security import decode_access_token
+from app.domain.enums import UserRole
 from app.models.user import User
 
 
@@ -91,3 +92,35 @@ def get_current_user(
         )
 
     return user
+
+
+def require_role(*allowed_roles: UserRole | str):
+    """FastAPI dependency enforcing role-based access control (AUTH-03).
+    
+    Accepts one or more allowed roles. Raises 403 FORBIDDEN if the authenticated
+    user does not have one of the required roles.
+    """
+    normalized_roles = {
+        r.value if isinstance(r, UserRole) else str(r) for r in allowed_roles
+    }
+
+    def _role_dependency(current_user: User = Depends(get_current_user)) -> User:
+        if current_user.role not in normalized_roles:
+            raise HTTPException(
+                status_code=403,
+                detail={
+                    "error": {
+                        "code": "FORBIDDEN",
+                        "message": "Insufficient permissions for this action",
+                    }
+                },
+            )
+        return current_user
+
+    return _role_dependency
+
+
+require_citizen = require_role(UserRole.CITIZEN)
+require_responder = require_role(UserRole.RESPONDER)
+require_ambulance = require_role(UserRole.AMBULANCE_OPERATOR)
+require_authority = require_role(UserRole.AUTHORITY)
