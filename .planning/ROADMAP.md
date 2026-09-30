@@ -12,7 +12,7 @@ LIFELINK is implemented in 12 sequential, verifiable phases matching Section 18 
 - Decimal phases: Urgent insertions (if needed)
 
 - [x] **Phase 0: Walking skeleton and deployment spike** - Prove stack deploys and talks to DB on Vercel before feature work (completed 2026-09-30)
-- [ ] **Phase 1: Domain model, migrations, clock, seeds** - Implement 11 database tables, constraints, Clock, and persona seeds
+- [x] **Phase 1: Domain model, migrations, clock, seeds** - Implement 11 database tables, constraints, Clock, and persona seeds (completed 2026-10-01)
 - [ ] **Phase 2: Auth, RBAC, authorization, audit, rate limiting** - Secure access foundation, session cookies, central authz, and audit logs
 - [ ] **Phase 3: Protocol library, triage engine, golden set, LLM adapter** - Safe deterministic triage rules, protocol library, and golden CI eval
 - [ ] **Phase 4: Orchestration engine (pure logic)** - Hard eligibility filters, 0-100 scoring, explainability, and ambulance ranking
@@ -67,21 +67,21 @@ Plans:
 4. Injectable `Clock` abstraction permits simulated offset advancement while direct `datetime.now()` is forbidden in domain code
 5. `app/seed.py` idempotently seeds `shared/taxonomy.json` and the Appendix B persona cast
 
-**Plans:** TBD
+**Plans:** 3/3 plans complete
 
 Plans:
 
 **Wave 1**
 
-- [ ] 01-01: Define taxonomy JSON and SQLAlchemy models for all 11 tables with constraints and triggers
+- [x] 01-01: Define taxonomy JSON and SQLAlchemy models for all 11 tables with constraints and triggers
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 01-02: Create Alembic migrations and verify migration up/down constraint validation tests
+- [x] 01-02: Create Alembic migrations and verify migration up/down constraint validation tests
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 01-03: Implement Clock abstraction and idempotent seed script for demo personas and taxonomy
+- [x] 01-03: Implement Clock abstraction and idempotent seed script for demo personas and taxonomy
 
 ### Phase 2: Auth, RBAC, authorization, audit, rate limiting
 
