@@ -13,7 +13,7 @@ LIFELINK is implemented in 12 sequential, verifiable phases matching Section 18 
 
 - [x] **Phase 0: Walking skeleton and deployment spike** - Prove stack deploys and talks to DB on Vercel before feature work (completed 2026-09-30)
 - [x] **Phase 1: Domain model, migrations, clock, seeds** - Implement 11 database tables, constraints, Clock, and persona seeds (completed 2026-10-01)
-- [ ] **Phase 2: Auth, RBAC, authorization, audit, rate limiting** - Secure access foundation, session cookies, central authz, and audit logs
+- [x] **Phase 2: Auth, RBAC, authorization, audit, rate limiting** - Secure access foundation, session cookies, central authz, and audit logs (completed 2026-10-01)
 - [ ] **Phase 3: Protocol library, triage engine, golden set, LLM adapter** - Safe deterministic triage rules, protocol library, and golden CI eval
 - [ ] **Phase 4: Orchestration engine (pure logic)** - Hard eligibility filters, 0-100 scoring, explainability, and ambulance ranking
 - [ ] **Phase 5: Emergency lifecycle, state machine, offers, lazy advance** - Transactional core, dual-track machine, offer mutations, and lazy advance
@@ -97,13 +97,13 @@ Plans:
 4. Every sensitive data access, login attempt, and verification action writes an immutable record to `audit_logs`
 5. Database-derived rate limiting blocks brute-force authentication and rapid false-alarm SOS creation
 
-**Plans:** 3 plans
+**Plans:** 3/3 plans complete
 
 Plans:
 
-- [ ] 02-01: Security Core, Password Hashing, JWT Sessions, and Auth Endpoints
-- [ ] 02-02: RBAC, Centralized Object Authorization, and Route Enumeration
-- [ ] 02-03: Security Audit Pipeline and DB-Derived Rate Limiting
+- [x] 02-01: Security Core, Password Hashing, JWT Sessions, and Auth Endpoints
+- [x] 02-02: RBAC, Centralized Object Authorization, and Route Enumeration
+- [x] 02-03: Security Audit Pipeline and DB-Derived Rate Limiting
 
 ### Phase 3: Protocol library, triage engine, golden set, LLM adapter
 
