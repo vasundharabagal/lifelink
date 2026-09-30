@@ -29,6 +29,18 @@ class Settings(BaseSettings):
     LLM_RETRY_TIMEOUT_SECONDS: float = 1.5
     DEMO_DISABLE_LLM: bool = True
 
+    # Response Orchestration constants (Spec §6.1, ORCH-01, ORCH-02, ORCH-04)
+    OFFER_TTL_S: int = 30
+    DEMO_OFFER_TTL_S: int = 20
+    MAX_COMMUNITY_CANDIDATES: int = 5
+    MAX_AMBULANCE_CANDIDATES: int = 3
+    LOCATION_FRESHNESS_S: int = 300
+    DETOUR_FACTOR: float = 1.35
+    RESPONDER_SPEED_KMH: float = 25.0
+    AMBULANCE_SPEED_KMH: float = 35.0
+    ETA_CAP_S: int = 900
+    COOLDOWN_AFTER_ASSIGNMENT_S: int = 120
+
     model_config = SettingsConfigDict(
         env_file=(str(_BACKEND_DIR / ".env"), str(_ROOT_DIR / ".env"), ".env"),
         env_file_encoding="utf-8",
