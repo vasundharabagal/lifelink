@@ -141,13 +141,13 @@ Plans:
 4. Full `MatchExplanation` object accurately reflects score breakdowns for ranked candidates and rejection reasons for disqualified ones
 5. Independent ambulance ranking evaluates unit type, ETA, and fairness
 
-**Plans:** 3 plans
+**Plans:** 3/3 plans complete
 
 Plans:
 
-- [ ] 04-01: Spatial Primitives, Orchestration Contracts, Constants, and Hard Eligibility Filters
-- [ ] 04-02: Multi-Factor Candidate Scoring, Curves, Tie-Breaking, and Ambulance Ranking
-- [ ] 04-03: Pure Engine Orchestration, MatchExplanation, Database Service, and Seeded Cast Tests
+- [x] 04-01: Spatial Primitives, Orchestration Contracts, Constants, and Hard Eligibility Filters
+- [x] 04-02: Multi-Factor Candidate Scoring, Curves, Tie-Breaking, and Ambulance Ranking
+- [x] 04-03: Pure Engine Orchestration, MatchExplanation, Database Service, and Seeded Cast Tests
 
 ### Phase 5: Emergency lifecycle, state machine, offers, lazy advance
 

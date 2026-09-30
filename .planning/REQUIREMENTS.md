@@ -40,10 +40,10 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Response Orchestration Engine (`ORCH`)
 
-- [ ] **ORCH-01**: Orchestration engine applies hard eligibility filters rejecting candidates for verification, status, skills, radius, scope, or active assignments
-- [ ] **ORCH-02**: Orchestration engine calculates 0-100 multi-factor scores (skills 30, ETA 30, fairness 15, reliability 10, tier 10, headroom 5) with deterministic tie-breaking
-- [ ] **ORCH-03**: Orchestration engine generates full `MatchExplanation` containing score breakdowns for ranked candidates and reason codes for rejected ones
-- [ ] **ORCH-04**: Ambulance ranking orders available units by ETA, unit suitability, and fairness independently of volunteer scoring
+- [x] **ORCH-01**: Orchestration engine applies hard eligibility filters rejecting candidates for verification, status, skills, radius, scope, or active assignments
+- [x] **ORCH-02**: Orchestration engine calculates 0-100 multi-factor scores (skills 30, ETA 30, fairness 15, reliability 10, tier 10, headroom 5) with deterministic tie-breaking
+- [x] **ORCH-03**: Orchestration engine generates full `MatchExplanation` containing score breakdowns for ranked candidates and reason codes for rejected ones
+- [x] **ORCH-04**: Ambulance ranking orders available units by ETA, unit suitability, and fairness independently of volunteer scoring
 
 ### Emergency Lifecycle & Dual-Track Dispatch (`CORE`)
 
@@ -160,10 +160,10 @@ Which phases cover which requirements. Populated during roadmap creation.
 | TRIAGE-03 | Phase 3 | Complete |
 | TRIAGE-04 | Phase 3 | Complete |
 | TRIAGE-05 | Phase 3 | Complete |
-| ORCH-01 | Phase 4 | Pending |
-| ORCH-02 | Phase 4 | Pending |
-| ORCH-03 | Phase 4 | Pending |
-| ORCH-04 | Phase 4 | Pending |
+| ORCH-01 | Phase 4 | Complete |
+| ORCH-02 | Phase 4 | Complete |
+| ORCH-03 | Phase 4 | Complete |
+| ORCH-04 | Phase 4 | Complete |
 | CORE-01 | Phase 5 | Pending |
 | CORE-02 | Phase 5 | Pending |
 | CORE-03 | Phase 5 | Pending |

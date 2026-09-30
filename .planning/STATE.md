@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: ready_to_execute
-stopped_at: Phase 4 planned (3 plans ready)
-last_updated: "2026-10-01T02:21:00.000Z"
-last_activity: 2026-10-01 -- Phase 4 planned (3 plans: spatial & filters, multi-factor scoring & tie-breaking, engine & seeded cast tests)
+status: ready_to_plan
+stopped_at: Phase 4 complete, ready for Phase 5
+last_updated: "2026-10-01T02:32:00.000Z"
+last_activity: 2026-10-01 -- Phase 4 complete (3/3 plans executed: spatial & filters, multi-factor scoring & tie-breaking, engine & seeded cast tests)
 progress:
   total_phases: 12
-  completed_phases: 4
+  completed_phases: 5
   total_plans: 15
-  completed_plans: 12
-  percent: 40
+  completed_plans: 15
+  percent: 45
 ---
 
 # Project State
@@ -21,22 +21,22 @@ progress:
 See: `.planning/PROJECT.md` (updated 2026-09-30)
 
 **Core value:** The explainable, safety-gated coordination layer that runs beside official emergency services and turns verified nearby people into an accountable first-response network, delivering immediate community first-aid guidance and deterministic dual-track response within strict safety boundaries.  
-**Current focus:** Phase 4: Orchestration engine (pure logic)
+**Current focus:** Phase 5: Emergency lifecycle, state machine, offers, lazy advance
 
 ## Current Position
 
-Phase: 4 of 11 (Orchestration engine (pure logic)) - PLANNED
-Plan: 0/3 plans complete (3 plans ready for execution)
-Status: Planned, ready for execution
-Last activity: 2026-10-01 -- Phase 4 planned (3 plans: spatial & filters, multi-factor scoring & tie-breaking, engine & seeded cast tests)
+Phase: 5 of 11 (Emergency lifecycle, state machine, offers, lazy advance) - NOT STARTED
+Plan: 0/3 plans complete
+Status: Ready for Phase 5 discussion and planning
+Last activity: 2026-10-01 -- Phase 4 complete (3/3 plans executed: spatial & filters, multi-factor scoring & tie-breaking, engine & seeded cast tests)
 
-Progress: [█████░░░░░] 40%
+Progress: [█████░░░░░] 45%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 12
+- Total plans completed: 15
 - Average duration: - min
 - Total execution time: 0.0 hours
 
@@ -48,7 +48,7 @@ Progress: [█████░░░░░] 40%
 | 1. Domain model, migrations, clock, seeds | 3/3 | - | - |
 | 2. Auth, RBAC, authorization, audit, rate limiting | 3/3 | - | - |
 | 3. Protocol library, triage engine, golden set, LLM adapter | 3/3 | - | - |
-| 4. Orchestration engine (pure logic) | 0/3 | - | - |
+| 4. Orchestration engine (pure logic) | 3/3 | - | - |
 | 5. Emergency lifecycle, state machine, offers, lazy advance | 0/3 | - | - |
 | 6. Frontend foundation and citizen SOS flow | 0/3 | - | - |
 | 7. Responder and ambulance consoles | 0/3 | - | - |
