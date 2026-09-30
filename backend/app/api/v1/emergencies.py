@@ -9,18 +9,23 @@ from sqlalchemy.orm import Session
 from app.api.deps import get_current_user
 from app.core.clock import Clock, get_clock
 from app.core.db import get_db
-from app.models.emergency import Emergency, EmergencyEvent
+from app.domain.enums import EmergencyStatus, OfferStatus, TrackStatus, UserRole
+from app.models.ambulance import AmbulanceUnit
+from app.models.emergency import DispatchOffer, Emergency, EmergencyEvent
 from app.models.user import User
 from app.schemas.emergency import (
     DuplicateEmergencyErrorResponse,
     EmergencyAdvanceRequest,
+    EmergencyCancelRequest,
     EmergencyCreateRequest,
     EmergencyEventResponse,
+    EmergencyResolveRequest,
     EmergencyResponse,
 )
 from app.services.advance import advance_emergency
 from app.services.authz import assert_can_view_emergency
 from app.services.emergency import DuplicateEmergencyError, create_emergency
+from app.services.privacy import filter_emergency_location_for_user
 
 router = APIRouter(prefix="/emergencies", tags=["emergencies"])
 
@@ -33,6 +38,40 @@ class OffsetClock(Clock):
 
     def now(self, demo_session_id: Optional[uuid.UUID] = None, db: Optional[Session] = None):
         return self.base_clock.now(demo_session_id, db) + self.offset
+
+
+def _build_emergency_response(emergency: Emergency, current_user: User, db: Session) -> EmergencyResponse:
+    """Project emergency entity to EmergencyResponse applying dynamic location privacy tiers (CORE-07)."""
+    active_offer = None
+    if current_user.role == UserRole.RESPONDER.value:
+        active_offer = (
+            db.query(DispatchOffer)
+            .filter(
+                DispatchOffer.emergency_id == emergency.id,
+                DispatchOffer.responder_id == current_user.id,
+            )
+            .order_by(DispatchOffer.rank.desc())
+            .first()
+        )
+    elif current_user.role == UserRole.AMBULANCE_OPERATOR.value:
+        active_offer = (
+            db.query(DispatchOffer)
+            .join(AmbulanceUnit, DispatchOffer.ambulance_id == AmbulanceUnit.id)
+            .filter(
+                DispatchOffer.emergency_id == emergency.id,
+                AmbulanceUnit.operator_user_id == current_user.id,
+            )
+            .order_by(DispatchOffer.rank.desc())
+            .first()
+        )
+
+    eff_lat, eff_lng, tier, revoked = filter_emergency_location_for_user(emergency, current_user, active_offer)
+    resp = EmergencyResponse.model_validate(emergency)
+    resp.lat = eff_lat
+    resp.lng = eff_lng
+    resp.location_tier = tier
+    resp.location_revoked = revoked
+    return resp
 
 
 @router.post(
@@ -72,7 +111,7 @@ def submit_emergency(
     else:
         response.status_code = status.HTTP_201_CREATED
 
-    return emergency
+    return _build_emergency_response(emergency, current_user, db)
 
 
 @router.get(
@@ -93,7 +132,7 @@ def get_emergency(
     # 2. Authorization check against current caller
     assert_can_view_emergency(user=current_user, emergency=emergency, db=db)
 
-    return emergency
+    return _build_emergency_response(emergency, current_user, db)
 
 
 @router.post(
@@ -115,7 +154,186 @@ def advance_emergency_endpoint(
 
     emergency = advance_emergency(db=db, emergency_id=id, clock=effective_clock)
     assert_can_view_emergency(user=current_user, emergency=emergency, db=db)
-    return emergency
+    return _build_emergency_response(emergency, current_user, db)
+
+
+@router.post(
+    "/{id}/cancel",
+    response_model=EmergencyResponse,
+    summary="Cancel an active emergency incident (CORE-06, Spec §5.4)",
+)
+def cancel_emergency(
+    id: uuid.UUID,
+    payload: Optional[EmergencyCancelRequest] = None,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+    clock: Clock = Depends(get_clock),
+):
+    """Reporter, patient, or authority cancels an active incident, closing all open offers."""
+    emergency = (
+        db.query(Emergency)
+        .filter(Emergency.id == id)
+        .with_for_update()
+        .one_or_none()
+    )
+    if not emergency:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail={"error": {"code": "NOT_FOUND", "message": "Emergency not found"}},
+        )
+
+    # Authorization: strictly reporter, patient, or authority (T-05-05)
+    if current_user.role != UserRole.AUTHORITY.value and current_user.id not in (
+        emergency.reported_by_user_id,
+        emergency.patient_user_id,
+    ):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail={"error": {"code": "FORBIDDEN", "message": "Only the reporter, patient, or authority may cancel an incident"}},
+        )
+
+    now = clock.now(emergency.demo_session_id, db)
+    reason = payload.reason if payload and payload.reason else "REPORTER_CANCELLED"
+
+    # Cancel all open offers
+    active_offers = (
+        db.query(DispatchOffer)
+        .filter(
+            DispatchOffer.emergency_id == emergency.id,
+            DispatchOffer.status.in_([
+                OfferStatus.OFFERED.value,
+                OfferStatus.ACCEPTED.value,
+                OfferStatus.ARRIVED.value,
+            ]),
+        )
+        .all()
+    )
+    for o in active_offers:
+        o.status = OfferStatus.CANCELLED.value
+        o.responded_at = now
+
+    if emergency.community_track != TrackStatus.DONE.value:
+        emergency.community_track = TrackStatus.CANCELLED.value
+    if emergency.professional_track != TrackStatus.DONE.value:
+        emergency.professional_track = TrackStatus.CANCELLED.value
+
+    emergency.status = EmergencyStatus.CANCELLED.value
+    emergency.close_reason = reason
+    emergency.closed_at = now
+    emergency.updated_at = now
+    emergency.version += 1
+
+    event_cancelled = EmergencyEvent(
+        emergency_id=emergency.id,
+        seq=emergency.next_event_seq,
+        type="EMERGENCY_CANCELLED",
+        actor_user_id=current_user.id,
+        actor_role=current_user.role,
+        payload={"reason": reason},
+        visible_to=["citizen", "responder", "ambulance_operator", "authority"],
+        at=now,
+    )
+    emergency.next_event_seq += 1
+    db.add(event_cancelled)
+
+    db.commit()
+    db.refresh(emergency)
+    return _build_emergency_response(emergency, current_user, db)
+
+
+@router.post(
+    "/{id}/resolve",
+    response_model=EmergencyResponse,
+    summary="Resolve and complete an emergency incident (CORE-06)",
+)
+def resolve_emergency(
+    id: uuid.UUID,
+    payload: Optional[EmergencyResolveRequest] = None,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+    clock: Clock = Depends(get_clock),
+):
+    """Authority or assigned ambulance operator formally marks emergency as resolved."""
+    emergency = (
+        db.query(Emergency)
+        .filter(Emergency.id == id)
+        .with_for_update()
+        .one_or_none()
+    )
+    if not emergency:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail={"error": {"code": "NOT_FOUND", "message": "Emergency not found"}},
+        )
+
+    is_authorized = current_user.role == UserRole.AUTHORITY.value
+    if not is_authorized and current_user.role == UserRole.AMBULANCE_OPERATOR.value:
+        assigned_amb = (
+            db.query(DispatchOffer)
+            .join(AmbulanceUnit, DispatchOffer.ambulance_id == AmbulanceUnit.id)
+            .filter(
+                DispatchOffer.emergency_id == emergency.id,
+                AmbulanceUnit.operator_user_id == current_user.id,
+                DispatchOffer.status.in_([
+                    OfferStatus.ACCEPTED.value,
+                    OfferStatus.ARRIVED.value,
+                    OfferStatus.COMPLETED.value,
+                ]),
+            )
+            .first()
+        )
+        if assigned_amb:
+            is_authorized = True
+
+    if not is_authorized:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail={"error": {"code": "FORBIDDEN", "message": "Only authorities or assigned ambulance operators may resolve an incident"}},
+        )
+
+    now = clock.now(emergency.demo_session_id, db)
+    summary_text = payload.summary if payload and payload.summary else "Emergency resolved by responder team"
+
+    active_offers = (
+        db.query(DispatchOffer)
+        .filter(
+            DispatchOffer.emergency_id == emergency.id,
+            DispatchOffer.status.in_([
+                OfferStatus.OFFERED.value,
+                OfferStatus.ACCEPTED.value,
+                OfferStatus.ARRIVED.value,
+            ]),
+        )
+        .all()
+    )
+    for o in active_offers:
+        o.status = OfferStatus.COMPLETED.value
+        o.completed_at = now
+
+    emergency.community_track = TrackStatus.DONE.value
+    emergency.professional_track = TrackStatus.DONE.value
+    emergency.status = EmergencyStatus.COMPLETED.value
+    emergency.close_reason = "RESOLVED"
+    emergency.closed_at = now
+    emergency.updated_at = now
+    emergency.version += 1
+
+    event_completed = EmergencyEvent(
+        emergency_id=emergency.id,
+        seq=emergency.next_event_seq,
+        type="EMERGENCY_COMPLETED",
+        actor_user_id=current_user.id,
+        actor_role=current_user.role,
+        payload={"summary": summary_text},
+        visible_to=["citizen", "responder", "ambulance_operator", "authority"],
+        at=now,
+    )
+    emergency.next_event_seq += 1
+    db.add(event_completed)
+
+    db.commit()
+    db.refresh(emergency)
+    return _build_emergency_response(emergency, current_user, db)
 
 
 @router.get(

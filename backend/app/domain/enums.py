@@ -128,6 +128,15 @@ class OfferStatus(str, Enum):
     CANCELLED = "CANCELLED"
 
 
+class OfferAction(str, Enum):
+    """Actions responder or ambulance operator can take on a dispatch offer (Spec §7.3, CORE-04)."""
+    ACCEPT = "ACCEPT"
+    DECLINE = "DECLINE"
+    ARRIVE = "ARRIVE"
+    SCENE_UNSAFE = "SCENE_UNSAFE"
+    COMPLETE = "COMPLETE"
+
+
 class AuditOutcome(str, Enum):
     """Security authorization decision outcomes."""
     ALLOW = "allow"

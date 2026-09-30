@@ -3,10 +3,12 @@ from app.api.v1.health import router as health_router
 from app.api.v1.auth import router as auth_router
 from app.api.v1.triage import router as triage_router
 from app.api.v1.emergencies import router as emergencies_router
+from app.api.v1.offers import router as offers_router
 
 api_router = APIRouter()
 api_router.include_router(health_router, prefix="", tags=["health"])
 api_router.include_router(auth_router, prefix="", tags=["auth"])
 api_router.include_router(triage_router, prefix="", tags=["triage"])
 api_router.include_router(emergencies_router, prefix="", tags=["emergencies"])
+api_router.include_router(offers_router, prefix="", tags=["offers"])
 

@@ -30,6 +30,20 @@ class EmergencyAdvanceRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
 
+class EmergencyCancelRequest(BaseModel):
+    """Payload to cancel an ongoing emergency incident."""
+    reason: Optional[str] = Field(default="REPORTER_CANCELLED", max_length=100)
+
+    model_config = ConfigDict(extra="forbid")
+
+
+class EmergencyResolveRequest(BaseModel):
+    """Payload to mark an emergency incident as formally resolved/completed."""
+    summary: Optional[str] = Field(default=None, max_length=500)
+
+    model_config = ConfigDict(extra="forbid")
+
+
 class DuplicateEmergencyErrorResponse(BaseModel):
     """Structured HTTP 409 response returned when a duplicate emergency is detected within 150m and 10min (Spec §7.1)."""
     error: str = Field(default="POSSIBLE_DUPLICATE")
@@ -76,6 +90,7 @@ class EmergencyResponse(BaseModel):
     location_accuracy_m: float = 10.0
     location_hint: Optional[str] = None
     location_tier: str = Field(default="exact", description="Location privacy level: exact, coarse, or revoked")
+    location_revoked: bool = Field(default=False, description="True if coordinates are withheld due to privacy revocation")
     patient_is_reporter: bool = True
     consent_share_medical: bool = False
     version: int = 1
