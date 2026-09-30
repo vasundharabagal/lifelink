@@ -163,7 +163,7 @@ Plans:
 4. Decline, timeout (`OFFER_TTL_S`), or scene-unsafe abort immediately cascades to candidate #2
 5. Location privacy tiers provide coarse coordinates (~250 m) before accept and exact coordinates only upon accept
 
-**Plans:** TBD
+**Plans:** 3 plans
 
 Plans:
 
