@@ -1,0 +1,12 @@
+{
+  "name": "lifelink-root",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm --prefix apps/web run dev\" \"uvicorn app.main:app --app-dir backend --reload --port 8000\"",
+    "build": "npm --prefix apps/web run build",
+    "test": "pytest backend/tests/"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
