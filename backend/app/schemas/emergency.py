@@ -23,6 +23,13 @@ class EmergencyCreateRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
 
+class EmergencyAdvanceRequest(BaseModel):
+    """Optional payload for explicit deterministic state advancement."""
+    offset_seconds: int = Field(default=0, ge=0, description="Virtual seconds to advance clock before evaluating state machine")
+
+    model_config = ConfigDict(extra="forbid")
+
+
 class DuplicateEmergencyErrorResponse(BaseModel):
     """Structured HTTP 409 response returned when a duplicate emergency is detected within 150m and 10min (Spec §7.1)."""
     error: str = Field(default="POSSIBLE_DUPLICATE")
