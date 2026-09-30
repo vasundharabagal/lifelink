@@ -1,0 +1,195 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "version": "1.0.0",
+  "emergency_types": [
+    {
+      "code": "BLEEDING",
+      "label": "Severe Bleeding",
+      "description": "Massive arterial or venous external bleeding requiring tourniquet or pressure dressing"
+    },
+    {
+      "code": "UNRESPONSIVE",
+      "label": "Unresponsive / Cardiac Arrest",
+      "description": "Person not responding to verbal or painful stimuli, suspected respiratory or cardiac arrest"
+    },
+    {
+      "code": "CHOKING",
+      "label": "Choking",
+      "description": "Upper airway obstruction causing inability to breathe, cough, or speak"
+    },
+    {
+      "code": "BURNS",
+      "label": "Severe Burns",
+      "description": "Significant thermal, electrical, or chemical burn injury"
+    },
+    {
+      "code": "SEIZURE",
+      "label": "Active Seizure",
+      "description": "Ongoing generalized tonic-clonic convulsions or status epilepticus"
+    },
+    {
+      "code": "TRAUMA_FALL",
+      "label": "Trauma / Fall / Collision",
+      "description": "High-velocity impact, fall from height, or vehicular collision with suspected structural injury"
+    },
+    {
+      "code": "CHEST_PAIN",
+      "label": "Chest Pain / Heart Condition",
+      "description": "Crushing retrosternal chest pain, radiating discomfort, or acute coronary syndrome signs"
+    },
+    {
+      "code": "OTHER",
+      "label": "Other Acute Emergency",
+      "description": "Acute medical distress not covered by other specific categories"
+    }
+  ],
+  "conditions": [
+    {
+      "code": "NOT_BREATHING",
+      "label": "Not Breathing Normally",
+      "red_flag": true
+    },
+    {
+      "code": "UNRESPONSIVE",
+      "label": "Unconscious / Unresponsive",
+      "red_flag": true
+    },
+    {
+      "code": "SEVERE_BLEEDING",
+      "label": "Life-Threatening Bleeding",
+      "red_flag": true
+    },
+    {
+      "code": "CHOKING",
+      "label": "Complete Airway Obstruction",
+      "red_flag": true
+    },
+    {
+      "code": "SEIZURE",
+      "label": "Active Convulsions",
+      "red_flag": false
+    },
+    {
+      "code": "BURNS",
+      "label": "Significant Burns",
+      "red_flag": false
+    },
+    {
+      "code": "FRACTURE_DISLOCATION",
+      "label": "Obvious Bone Fracture or Joint Dislocation",
+      "red_flag": false
+    },
+    {
+      "code": "CHEST_PAIN",
+      "label": "Acute Retrosternal Chest Pain",
+      "red_flag": true
+    },
+    {
+      "code": "HYPOTHERMIA_HEAT",
+      "label": "Severe Heat Stroke or Hypothermia",
+      "red_flag": false
+    }
+  ],
+  "skills": [
+    {
+      "code": "cpr_aed",
+      "name": "CPR & Automated External Defibrillator",
+      "levels": {
+        "1": "trained",
+        "2": "certified",
+        "3": "professional"
+      }
+    },
+    {
+      "code": "bleeding_control",
+      "name": "Severe Bleeding Control & Tourniquet",
+      "levels": {
+        "1": "trained",
+        "2": "certified",
+        "3": "professional"
+      }
+    },
+    {
+      "code": "trauma_response",
+      "name": "Musculoskeletal & Spinal Trauma Stabilization",
+      "levels": {
+        "1": "trained",
+        "2": "certified",
+        "3": "professional"
+      }
+    },
+    {
+      "code": "basic_first_aid",
+      "name": "Basic First Aid & Wound Management",
+      "levels": {
+        "1": "trained",
+        "2": "certified",
+        "3": "professional"
+      }
+    },
+    {
+      "code": "advanced_life_support",
+      "name": "Advanced Airway, Resuscitation & Medications",
+      "levels": {
+        "1": "trained",
+        "2": "certified",
+        "3": "professional"
+      }
+    }
+  ],
+  "responder_categories": [
+    "doctor",
+    "nurse",
+    "paramedic",
+    "emt",
+    "certified_first_aider",
+    "medical_volunteer",
+    "student_responder",
+    "security_personnel",
+    "other"
+  ],
+  "protocol_skill_requirements": {
+    "PROT_UNRESPONSIVE": [
+      {
+        "skill": "cpr_aed",
+        "min_level": 2
+      }
+    ],
+    "PROT_SEVERE_BLEEDING": [
+      {
+        "skill": "bleeding_control",
+        "min_level": 2
+      }
+    ],
+    "PROT_CHOKING": [
+      {
+        "skill": "basic_first_aid",
+        "min_level": 1
+      }
+    ],
+    "PROT_SEIZURE": [
+      {
+        "skill": "basic_first_aid",
+        "min_level": 1
+      }
+    ],
+    "PROT_BURNS": [
+      {
+        "skill": "basic_first_aid",
+        "min_level": 1
+      }
+    ],
+    "PROT_TRAUMA_FALL": [
+      {
+        "skill": "trauma_response",
+        "min_level": 2
+      }
+    ],
+    "PROT_GENERAL": [
+      {
+        "skill": "basic_first_aid",
+        "min_level": 1
+      }
+    ]
+  }
+}
