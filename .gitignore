@@ -1,0 +1,27 @@
+# Node dependencies and build artifacts
+node_modules/
+dist/
+.output/
+
+# Python virtual environment and cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+venv/
+.venv/
+env/
+.env
+
+# OS and IDE files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Local build spikes
+*.local
