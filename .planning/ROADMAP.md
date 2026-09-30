@@ -97,13 +97,13 @@ Plans:
 4. Every sensitive data access, login attempt, and verification action writes an immutable record to `audit_logs`
 5. Database-derived rate limiting blocks brute-force authentication and rapid false-alarm SOS creation
 
-**Plans:** TBD
+**Plans:** 3 plans
 
 Plans:
 
-- [ ] 02-01: Implement argon2id password hashing, JWT cookie sessions, and registration/login endpoints
-- [ ] 02-02: Build role-based access control, route enumeration test, and central authorization service
-- [ ] 02-03: Implement audit logger, standard error envelope, and database-derived rate limiting
+- [ ] 02-01: Security Core, Password Hashing, JWT Sessions, and Auth Endpoints
+- [ ] 02-02: RBAC, Centralized Object Authorization, and Route Enumeration
+- [ ] 02-03: Security Audit Pipeline and DB-Derived Rate Limiting
 
 ### Phase 3: Protocol library, triage engine, golden set, LLM adapter
 
