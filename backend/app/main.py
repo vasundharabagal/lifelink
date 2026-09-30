@@ -27,14 +27,57 @@ app.add_middleware(
 )
 
 
+from fastapi.exceptions import HTTPException, RequestValidationError
+
+
+@app.exception_handler(HTTPException)
+async def http_exception_handler(request: Request, exc: HTTPException):
+    """Standardized error envelope preserving status codes, details, and headers (Spec §4.4)."""
+    detail = exc.detail
+    if isinstance(detail, dict) and "error" in detail:
+        content = detail
+    else:
+        content = {
+            "error": {
+                "code": "HTTP_ERROR",
+                "message": str(detail),
+            }
+        }
+    return JSONResponse(
+        status_code=exc.status_code,
+        content=content,
+        headers=exc.headers,
+    )
+
+
+from fastapi.encoders import jsonable_encoder
+
+
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request: Request, exc: RequestValidationError):
+    """Standardized 422 VALIDATION_ERROR envelope."""
+    return JSONResponse(
+        status_code=422,
+        content={
+            "error": {
+                "code": "VALIDATION_ERROR",
+                "message": "Request validation failed",
+                "details": jsonable_encoder(exc.errors()),
+            }
+        },
+    )
+
+
 @app.exception_handler(Exception)
 async def global_exception_handler(request: Request, exc: Exception):
     """Enforce standardized error envelope across all unhandled exceptions."""
     return JSONResponse(
         status_code=500,
         content={
-            "detail": "Internal server error",
-            "code": "INTERNAL_SERVER_ERROR",
+            "error": {
+                "code": "INTERNAL_SERVER_ERROR",
+                "message": "Internal server error",
+            }
         },
     )
 

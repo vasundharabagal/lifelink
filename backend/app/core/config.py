@@ -3,6 +3,11 @@ from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
+from pathlib import Path
+
+_BACKEND_DIR = Path(__file__).resolve().parents[2]
+_ROOT_DIR = Path(__file__).resolve().parents[3]
+
 class Settings(BaseSettings):
     DATABASE_URL: str = "postgresql://lifelink_user:lifelink_password@localhost:5432/lifelink_db"
     APP_ENV: str = "development"
@@ -14,7 +19,7 @@ class Settings(BaseSettings):
     DEFAULT_DEMO_SESSION_ID: str = "00000000-0000-0000-0000-000000000001"
 
     model_config = SettingsConfigDict(
-        env_file=".env",
+        env_file=(str(_BACKEND_DIR / ".env"), str(_ROOT_DIR / ".env"), ".env"),
         env_file_encoding="utf-8",
         extra="ignore"
     )

@@ -9,6 +9,7 @@ def test_alembic_roundtrip_migrations():
     """Verify clean downgrade to base and upgrade back to head."""
     ini_path = Path(__file__).resolve().parent.parent / "alembic.ini"
     cfg = Config(str(ini_path))
+    cfg.set_main_option("script_location", str(ini_path.parent / "alembic"))
     
     # Downgrade to base
     command.downgrade(cfg, "base")
