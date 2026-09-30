@@ -141,13 +141,13 @@ Plans:
 4. Full `MatchExplanation` object accurately reflects score breakdowns for ranked candidates and rejection reasons for disqualified ones
 5. Independent ambulance ranking evaluates unit type, ETA, and fairness
 
-**Plans:** TBD
+**Plans:** 3 plans
 
 Plans:
 
-- [ ] 04-01: Implement Haversine distance, bounding box prefilter, and hard eligibility filters
-- [ ] 04-02: Implement multi-factor candidate scoring and deterministic tie-breaking algorithms
-- [ ] 04-03: Implement MatchExplanation builder and independent ambulance ranking logic
+- [ ] 04-01: Spatial Primitives, Orchestration Contracts, Constants, and Hard Eligibility Filters
+- [ ] 04-02: Multi-Factor Candidate Scoring, Curves, Tie-Breaking, and Ambulance Ranking
+- [ ] 04-03: Pure Engine Orchestration, MatchExplanation, Database Service, and Seeded Cast Tests
 
 ### Phase 5: Emergency lifecycle, state machine, offers, lazy advance
 
