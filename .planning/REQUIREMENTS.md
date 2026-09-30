@@ -9,9 +9,9 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Infrastructure & Deployment (`INFRA`)
 
-- [ ] **INFRA-01**: Developer can deploy Vite React frontend and FastAPI backend walking skeleton to Vercel serving `/api/v1/health`
-- [ ] **INFRA-02**: System connects to managed PostgreSQL with `NullPool` serverless configuration and supports local Docker Compose fallback
-- [ ] **INFRA-03**: Deployed client page successfully polls `/api/v1/health` every 2 s and records cold-start benchmarks in `docs/ADR-001-deployment.md`
+- [x] **INFRA-01**: Developer can deploy Vite React frontend and FastAPI backend walking skeleton to Vercel serving `/api/v1/health`
+- [x] **INFRA-02**: System connects to managed PostgreSQL with `NullPool` serverless configuration and supports local Docker Compose fallback
+- [x] **INFRA-03**: Deployed client page successfully polls `/api/v1/health` every 2 s and records cold-start benchmarks in `docs/ADR-001-deployment.md`
 
 ### Domain Model & Data Primitives (`DATA`)
 
@@ -141,9 +141,9 @@ Which phases cover which requirements. Populated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| INFRA-01 | Phase 0 | Pending |
-| INFRA-02 | Phase 0 | Pending |
-| INFRA-03 | Phase 0 | Pending |
+| INFRA-01 | Phase 0 | Complete |
+| INFRA-02 | Phase 0 | Complete |
+| INFRA-03 | Phase 0 | Complete |
 | DATA-01 | Phase 1 | Pending |
 | DATA-02 | Phase 1 | Pending |
 | DATA-03 | Phase 1 | Pending |
@@ -202,6 +202,7 @@ Which phases cover which requirements. Populated during roadmap creation.
 | HARDEN-05 | Phase 11 | Pending |
 
 **Coverage:**
+
 - v1 requirements: 56 total
 - Mapped to phases: 56
 - Unmapped: 0 ✓

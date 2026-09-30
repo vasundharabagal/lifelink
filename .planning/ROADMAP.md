@@ -11,7 +11,7 @@ LIFELINK is implemented in 12 sequential, verifiable phases matching Section 18 
 - Integer phases (0 to 11): Canonical implementation phases from specification
 - Decimal phases: Urgent insertions (if needed)
 
-- [ ] **Phase 0: Walking skeleton and deployment spike** - Prove stack deploys and talks to DB on Vercel before feature work
+- [x] **Phase 0: Walking skeleton and deployment spike** - Prove stack deploys and talks to DB on Vercel before feature work (completed 2026-09-30)
 - [ ] **Phase 1: Domain model, migrations, clock, seeds** - Implement 11 database tables, constraints, Clock, and persona seeds
 - [ ] **Phase 2: Auth, RBAC, authorization, audit, rate limiting** - Secure access foundation, session cookies, central authz, and audit logs
 - [ ] **Phase 3: Protocol library, triage engine, golden set, LLM adapter** - Safe deterministic triage rules, protocol library, and golden CI eval
@@ -38,20 +38,20 @@ LIFELINK is implemented in 12 sequential, verifiable phases matching Section 18 
 2. Client page successfully polls `/api/v1/health` every 2 s with automatic reconnection on network recovery
 3. Local development path runs via `docker-compose.yml` against PostgreSQL with measured cold starts documented in `docs/ADR-001-deployment.md`
 
-**Plans:** TBD
+**Plans:** 3/3 plans complete
 
 Plans:
 **Wave 1**
 
-- [ ] 00-01: Scaffold Vite React frontend, FastAPI backend, and local Docker Compose PostgreSQL
+- [x] 00-01: Scaffold Vite React frontend, FastAPI backend, and local Docker Compose PostgreSQL
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 00-02: Configure Vercel serverless deployment, routing rewrites, and database pooling
+- [x] 00-02: Configure Vercel serverless deployment, routing rewrites, and database pooling
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
-- [ ] 00-03: Validate health polling, measure cold starts, and document ADR-001 deployment decision
+- [x] 00-03: Validate health polling, measure cold starts, and document ADR-001 deployment decision
 
 ### Phase 1: Domain model, migrations, clock, seeds
 
@@ -300,7 +300,7 @@ Phases execute in numeric order: 0 → 1 → 2 → 3 → 4 → 5 → 6 → 7 →
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 0. Walking skeleton and deployment spike | 0/3 | Not started | - |
+| 0. Walking skeleton and deployment spike | 3/3 | Complete    | 2026-09-30 |
 | 1. Domain model, migrations, clock, seeds | 0/3 | Not started | - |
 | 2. Auth, RBAC, authorization, audit, rate limiting | 0/3 | Not started | - |
 | 3. Protocol library, triage engine, golden set, LLM adapter | 0/3 | Not started | - |
