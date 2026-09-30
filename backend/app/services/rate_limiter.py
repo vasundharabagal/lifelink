@@ -121,3 +121,37 @@ def check_location_rate_limit(
                 },
                 headers={"Retry-After": str(retry_after)},
             )
+
+
+def check_triage_preview_rate_limit(
+    user_id: uuid.UUID,
+    db: Session,
+    clock: Clock,
+    demo_session_id: Optional[uuid.UUID] = None,
+) -> None:
+    """Enforce triage preview rate limiting: 20 per user per 10 minutes (Spec §8.8)."""
+    now_dt = clock.now(demo_session_id, db)
+    cutoff = now_dt - timedelta(minutes=10)
+
+    count = (
+        db.query(AuditLog)
+        .filter(
+            AuditLog.action == "triage_preview",
+            AuditLog.actor_user_id == user_id,
+            AuditLog.at >= cutoff,
+        )
+        .count()
+    )
+
+    if count >= 20:
+        raise HTTPException(
+            status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+            detail={
+                "error": {
+                    "code": "RATE_LIMITED",
+                    "message": "Triage preview rate limit exceeded (maximum 20 per 10 minutes)",
+                    "retry_after_s": 600,
+                }
+            },
+            headers={"Retry-After": "600"},
+        )

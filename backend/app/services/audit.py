@@ -111,6 +111,9 @@ def log_security_event(
             session.close()
 
 
+log_audit_event = log_security_event
+
+
 def log_login_attempt(
     email: str,
     success: bool,

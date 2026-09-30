@@ -17,6 +17,17 @@ class Settings(BaseSettings):
     DEMO_CENTER_LAT: float = 18.5204
     DEMO_CENTER_LNG: float = 73.8567
     DEFAULT_DEMO_SESSION_ID: str = "00000000-0000-0000-0000-000000000001"
+    
+    # LLM and Triage settings (TRIAGE-04, D-41, D-42, D-43)
+    LLM_PROVIDER: str = "none"
+    GEMINI_API_KEY: Optional[str] = None
+    GEMINI_MODEL: str = "gemini-1.5-flash"
+    OPENAI_API_KEY: Optional[str] = None
+    OPENAI_BASE_URL: str = "https://api.openai.com/v1"
+    OPENAI_MODEL: str = "gpt-4o-mini"
+    LLM_TIMEOUT_SECONDS: float = 4.0
+    LLM_RETRY_TIMEOUT_SECONDS: float = 1.5
+    DEMO_DISABLE_LLM: bool = True
 
     model_config = SettingsConfigDict(
         env_file=(str(_BACKEND_DIR / ".env"), str(_ROOT_DIR / ".env"), ".env"),
