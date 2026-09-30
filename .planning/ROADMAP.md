@@ -119,7 +119,7 @@ Plans:
 4. Optional LLM extractor validates against closed enums, times out cleanly at 4 s, and respects the escalate-only invariant
 5. Golden test suite of 40+ cases passes in CI with >=0.95 red-flag recall and 0 unsafe downgrades
 
-**Plans:** TBD
+**Plans:** 3 plans defined
 
 Plans:
 
