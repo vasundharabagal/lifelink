@@ -11,6 +11,7 @@ class Settings(BaseSettings):
     EMERGENCY_NUMBER: str = "112"
     DEMO_CENTER_LAT: float = 18.5204
     DEMO_CENTER_LNG: float = 73.8567
+    DEFAULT_DEMO_SESSION_ID: str = "00000000-0000-0000-0000-000000000001"
 
     model_config = SettingsConfigDict(
         env_file=".env",
@@ -34,6 +35,9 @@ class Settings(BaseSettings):
             url = "postgresql+psycopg2://" + url[len("postgresql://"):]
             
         return url
+
+    def get_sqlalchemy_database_url(self) -> str:
+        return self.DATABASE_URL
 
 
 settings = Settings()

@@ -1,4 +1,3 @@
-from datetime import datetime, timezone
 from fastapi import APIRouter, Depends
 from pydantic import BaseModel
 from sqlalchemy import text
@@ -6,6 +5,7 @@ from sqlalchemy.orm import Session
 
 from app.core.config import settings
 from app.core.db import get_db
+from app.core.clock import Clock, get_clock
 
 router = APIRouter()
 
@@ -20,7 +20,10 @@ class HealthResponse(BaseModel):
 
 
 @router.get("/health", response_model=HealthResponse)
-def get_health(db: Session = Depends(get_db)):
+def get_health(
+    db: Session = Depends(get_db),
+    clock: Clock = Depends(get_clock),
+):
     db_status = "error"
     try:
         result = db.execute(text("SELECT 1")).scalar()
@@ -34,6 +37,6 @@ def get_health(db: Session = Depends(get_db)):
         db=db_status,
         version="1.0",
         demo_mode=settings.DEMO_MODE_ENABLED,
-        timestamp=datetime.now(timezone.utc).isoformat(),
+        timestamp=clock.now().isoformat(),
         environment=settings.APP_ENV,
     )
