@@ -1,0 +1,57 @@
+{
+  "id": "PROT_SEVERE_BLEEDING",
+  "version": "1.0.0",
+  "title": "Severe External Bleeding Control",
+  "applies_to": [
+    "SEVERE_BLEEDING"
+  ],
+  "status": "demo_unreviewed",
+  "source_citation": "International Federation of Red Cross and Red Crescent Societies (IFRC) International First Aid Guidelines 2020; American College of Surgeons Committee on Trauma (ACS COT) Stop the Bleed Guidelines",
+  "reviewed_by": null,
+  "reviewed_on": null,
+  "call_emergency_first": true,
+  "steps": [
+    {
+      "n": 1,
+      "text_key": "Call 112 immediately and ensure the immediate scene is safe",
+      "icon": "phone"
+    },
+    {
+      "n": 2,
+      "text_key": "Expose the wound: cut or push away clothing to see the exact bleeding source",
+      "icon": "eye"
+    },
+    {
+      "n": 3,
+      "text_key": "Apply firm, continuous direct pressure directly over the bleeding point using sterile gauze, clean cloth, or bare hands if no dressing is available",
+      "icon": "hand"
+    },
+    {
+      "n": 4,
+      "text_key": "Maintain direct pressure without lifting the dressing to check the wound; add more dressings on top if blood soaks through",
+      "icon": "shield"
+    },
+    {
+      "n": 5,
+      "text_key": "If life-threatening bleeding on an arm or leg does not stop with direct pressure, apply a commercial windlass tourniquet 5 to 7 cm above the wound (never over a joint)",
+      "icon": "tool"
+    },
+    {
+      "n": 6,
+      "text_key": "Tighten tourniquet until bright red spurting or heavy bleeding completely stops, secure the windlass rod, and record the exact application time",
+      "icon": "clock"
+    },
+    {
+      "n": 7,
+      "text_key": "Keep the patient warm and lying flat to treat or prevent hemorrhagic shock",
+      "icon": "thermometer"
+    }
+  ],
+  "do_not": [
+    "Do not remove or peel away dressings that have soaked through; always apply new dressings directly over existing ones",
+    "Do not remove a tourniquet once applied, even if bleeding has stopped; only trained medical personnel should release it",
+    "Do not apply a tourniquet directly over a joint (elbow, knee) or directly over an open fracture",
+    "Do not attempt to probe, clean, or remove deeply impaled objects from the wound"
+  ],
+  "disclaimer_key": "demo_unreviewed_guidance"
+}

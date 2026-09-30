@@ -1,0 +1,52 @@
+{
+  "id": "PROT_SEIZURE",
+  "version": "1.0.0",
+  "title": "Active Convulsions / Seizure Management",
+  "applies_to": [
+    "SEIZURE"
+  ],
+  "status": "demo_unreviewed",
+  "source_citation": "International Federation of Red Cross and Red Crescent Societies (IFRC) International First Aid Guidelines 2020; Epilepsy Foundation Clinical First Aid Protocols",
+  "reviewed_by": null,
+  "reviewed_on": null,
+  "call_emergency_first": true,
+  "steps": [
+    {
+      "n": 1,
+      "text_key": "Call 112 immediately if this is a first seizure, lasts longer than 5 minutes, repeats, or the person was injured",
+      "icon": "phone"
+    },
+    {
+      "n": 2,
+      "text_key": "Time the seizure: note the exact start time of active jerking or convulsions",
+      "icon": "clock"
+    },
+    {
+      "n": 3,
+      "text_key": "Protect from harm: gently guide them away from hazards, move furniture, and cushion their head with something soft (folded jacket)",
+      "icon": "shield"
+    },
+    {
+      "n": 4,
+      "text_key": "Loosen tight clothing around the neck to assist airway and breathing",
+      "icon": "user"
+    },
+    {
+      "n": 5,
+      "text_key": "Once active convulsive jerking stops: gently turn the person onto their side into the recovery position to keep airway clear of saliva or vomit",
+      "icon": "arrow-right"
+    },
+    {
+      "n": 6,
+      "text_key": "Stay with the person until they are fully awake and their breathing has returned to normal; speak reassuringly",
+      "icon": "user-check"
+    }
+  ],
+  "do_not": [
+    "Do not restrain the person's movements or pin them down during active convulsions",
+    "Do not place any object, spoon, finger, or medication into the person's mouth",
+    "Do not give any food, water, or pills until the person is completely conscious and alert",
+    "Do not attempt CPR during an active convulsion unless they remain completely unresponsive and not breathing after the seizure stops"
+  ],
+  "disclaimer_key": "demo_unreviewed_guidance"
+}

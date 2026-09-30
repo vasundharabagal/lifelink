@@ -144,3 +144,14 @@ class TrackKind(str, Enum):
     """Independent dispatch tracks."""
     COMMUNITY = "community"
     PROFESSIONAL = "professional"
+
+
+class ProtocolId(str, Enum):
+    """Pre-reviewed first-aid protocol identifiers (Spec §5.5)."""
+    PROT_UNRESPONSIVE = "PROT_UNRESPONSIVE"
+    PROT_SEVERE_BLEEDING = "PROT_SEVERE_BLEEDING"
+    PROT_CHOKING = "PROT_CHOKING"
+    PROT_SEIZURE = "PROT_SEIZURE"
+    PROT_BURNS = "PROT_BURNS"
+    PROT_TRAUMA_FALL = "PROT_TRAUMA_FALL"
+    PROT_GENERAL = "PROT_GENERAL"

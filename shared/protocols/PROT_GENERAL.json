@@ -1,0 +1,52 @@
+{
+  "id": "PROT_GENERAL",
+  "version": "1.0.0",
+  "title": "General Acute Emergency & First Response",
+  "applies_to": [
+    "OTHER",
+    "HYPOTHERMIA_HEAT"
+  ],
+  "status": "demo_unreviewed",
+  "source_citation": "International Federation of Red Cross and Red Crescent Societies (IFRC) International First Aid Guidelines 2020",
+  "reviewed_by": null,
+  "reviewed_on": null,
+  "call_emergency_first": true,
+  "steps": [
+    {
+      "n": 1,
+      "text_key": "Call 112 immediately if the patient's condition is worsening, unclear, or causing severe distress",
+      "icon": "phone"
+    },
+    {
+      "n": 2,
+      "text_key": "Ensure the immediate area is safe for yourself and the patient before approaching",
+      "icon": "shield"
+    },
+    {
+      "n": 3,
+      "text_key": "Assess responsiveness: ask clear questions and check that the person is breathing comfortably",
+      "icon": "user-check"
+    },
+    {
+      "n": 4,
+      "text_key": "Place the person in a comfortable resting position: sitting up if breathing is difficult, or lying down with head supported if feeling faint",
+      "icon": "user"
+    },
+    {
+      "n": 5,
+      "text_key": "Keep the patient calm, comfortable, and protected from temperature extremes (shade if overheated, blanket if cold)",
+      "icon": "thermometer"
+    },
+    {
+      "n": 6,
+      "text_key": "Monitor breathing and responsiveness continuously; if they become unresponsive, begin chest compressions immediately",
+      "icon": "activity"
+    }
+  ],
+  "do_not": [
+    "Do not leave the person alone if their condition is deteriorating",
+    "Do not give any unknown medications, food, or alcoholic drinks",
+    "Do not force an injured or distressed person to stand or walk"
+  ],
+  "disclaimer_key": "demo_unreviewed_guidance"
+}

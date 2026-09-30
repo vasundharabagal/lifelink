@@ -1,0 +1,58 @@
+{
+  "id": "PROT_UNRESPONSIVE",
+  "version": "1.0.0",
+  "title": "Unresponsive Person / Cardiac Arrest",
+  "applies_to": [
+    "UNRESPONSIVE",
+    "NOT_BREATHING"
+  ],
+  "status": "demo_unreviewed",
+  "source_citation": "International Federation of Red Cross and Red Crescent Societies (IFRC) International First Aid, Resuscitation, and Education Guidelines 2020; American Heart Association (AHA) Guidelines for CPR and ECC 2020",
+  "reviewed_by": null,
+  "reviewed_on": null,
+  "call_emergency_first": true,
+  "steps": [
+    {
+      "n": 1,
+      "text_key": "Call 112 immediately and place phone on speaker beside the patient",
+      "icon": "phone"
+    },
+    {
+      "n": 2,
+      "text_key": "Check response and breathing: gently tap shoulders and shout loudly; look for normal chest rise for no more than 10 seconds",
+      "icon": "user-check"
+    },
+    {
+      "n": 3,
+      "text_key": "If unresponsive and not breathing normally, place patient on a firm, flat surface",
+      "icon": "arrow-down"
+    },
+    {
+      "n": 4,
+      "text_key": "Position heel of one hand in the center of the chest (lower half of breastbone), place other hand on top and interlock fingers",
+      "icon": "hand"
+    },
+    {
+      "n": 5,
+      "text_key": "Deliver hard and fast chest compressions: 5 to 6 cm deep at a rate of 100 to 120 compressions per minute",
+      "icon": "activity"
+    },
+    {
+      "n": 6,
+      "text_key": "Allow complete chest recoil between compressions; do not interrupt compressions unless an AED is ready or patient begins breathing normally",
+      "icon": "repeat"
+    },
+    {
+      "n": 7,
+      "text_key": "If an AED arrives, turn it on immediately and follow the automated voice prompts",
+      "icon": "zap"
+    }
+  ],
+  "do_not": [
+    "Do not leave the person unattended unless absolutely necessary to call for help",
+    "Do not place a pillow or support under the person's head",
+    "Do not attempt to give water, food, or oral medications to an unconscious person",
+    "Do not slap, shake vigorously, or throw water on the face"
+  ],
+  "disclaimer_key": "demo_unreviewed_guidance"
+}

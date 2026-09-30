@@ -1,0 +1,56 @@
+{
+  "id": "PROT_CHOKING",
+  "version": "1.0.0",
+  "title": "Severe Airway Obstruction / Choking",
+  "applies_to": [
+    "CHOKING"
+  ],
+  "status": "demo_unreviewed",
+  "source_citation": "International Federation of Red Cross and Red Crescent Societies (IFRC) International First Aid Guidelines 2020; European Resuscitation Council (ERC) Guidelines for Resuscitation 2021",
+  "reviewed_by": null,
+  "reviewed_on": null,
+  "call_emergency_first": true,
+  "steps": [
+    {
+      "n": 1,
+      "text_key": "Call 112 immediately if the person cannot speak, cough forcefully, or breathe",
+      "icon": "phone"
+    },
+    {
+      "n": 2,
+      "text_key": "If the person is coughing effectively, encourage them to keep coughing and do not interfere",
+      "icon": "volume-2"
+    },
+    {
+      "n": 3,
+      "text_key": "If severe obstruction (silent struggle, clutching throat, inability to breathe): stand to the side and slightly behind, support their chest with one hand, and lean them forward",
+      "icon": "user"
+    },
+    {
+      "n": 4,
+      "text_key": "Deliver up to 5 sharp back blows between the shoulder blades using the heel of your other hand",
+      "icon": "hand"
+    },
+    {
+      "n": 5,
+      "text_key": "If back blows fail to dislodge the object: stand behind, place a fist just above the navel (below ribcage), grasp fist with other hand, and pull sharply inwards and upwards (abdominal thrusts) up to 5 times",
+      "icon": "activity"
+    },
+    {
+      "n": 6,
+      "text_key": "Alternate 5 back blows and 5 abdominal thrusts until the obstruction clears or emergency help arrives",
+      "icon": "repeat"
+    },
+    {
+      "n": 7,
+      "text_key": "If the person becomes unconscious: lower them carefully to the floor and begin CPR chest compressions immediately",
+      "icon": "heart"
+    }
+  ],
+  "do_not": [
+    "Do not perform blind finger sweeps in the mouth; only remove a foreign object if it is clearly visible and easily grasped",
+    "Do not give oral fluids or food while the person is choking",
+    "Do not perform abdominal thrusts on infants under 1 year old (use back blows and chest thrusts only)"
+  ],
+  "disclaimer_key": "demo_unreviewed_guidance"
+}

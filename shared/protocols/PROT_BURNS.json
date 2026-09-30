@@ -1,0 +1,52 @@
+{
+  "id": "PROT_BURNS",
+  "version": "1.0.0",
+  "title": "Severe Thermal, Chemical, and Electrical Burns",
+  "applies_to": [
+    "BURNS"
+  ],
+  "status": "demo_unreviewed",
+  "source_citation": "International Federation of Red Cross and Red Crescent Societies (IFRC) International First Aid Guidelines 2020; American Burn Association (ABA) Initial Burn Assessment Guidelines",
+  "reviewed_by": null,
+  "reviewed_on": null,
+  "call_emergency_first": true,
+  "steps": [
+    {
+      "n": 1,
+      "text_key": "Call 112 immediately for burns covering large areas, burns to face, hands, joints, or genitals, or chemical/electrical burns",
+      "icon": "phone"
+    },
+    {
+      "n": 2,
+      "text_key": "Ensure your own safety: isolate electrical power source, extinguish flames, or move away from hot liquids or chemical fumes",
+      "icon": "shield"
+    },
+    {
+      "n": 3,
+      "text_key": "Cool the burn immediately under clean, running, cool or lukewarm tap water for at least 20 minutes (or until ambulance arrives)",
+      "icon": "droplet"
+    },
+    {
+      "n": 4,
+      "text_key": "Gently remove jewelry, watches, belts, and loose non-adherent clothing before swelling begins",
+      "icon": "tool"
+    },
+    {
+      "n": 5,
+      "text_key": "Cover the cooled burn loosely with clean, non-adherent sterile dressing or clear plastic cling film laid flat",
+      "icon": "file-text"
+    },
+    {
+      "n": 6,
+      "text_key": "Keep the rest of the patient's body warm with dry blankets to prevent systemic hypothermia",
+      "icon": "thermometer"
+    }
+  ],
+  "do_not": [
+    "Do not apply ice, ice water, or freezing compresses to burned skin (causes further tissue damage)",
+    "Do not peel off clothing that is stuck or melted into the burn wound",
+    "Do not break or puncture any burn blisters",
+    "Do not apply butter, oil, toothpaste, flour, turmeric, or unproven home remedies to burned skin"
+  ],
+  "disclaimer_key": "demo_unreviewed_guidance"
+}

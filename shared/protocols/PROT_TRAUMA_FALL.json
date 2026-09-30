@@ -1,0 +1,53 @@
+{
+  "id": "PROT_TRAUMA_FALL",
+  "version": "1.0.0",
+  "title": "Severe Trauma, High Falls, and Suspected Fractures",
+  "applies_to": [
+    "FRACTURE_DISLOCATION",
+    "TRAUMA_FALL"
+  ],
+  "status": "demo_unreviewed",
+  "source_citation": "International Federation of Red Cross and Red Crescent Societies (IFRC) International First Aid Guidelines 2020; American College of Surgeons (ACS) Advanced Trauma Life Support (ATLS) Principles",
+  "reviewed_by": null,
+  "reviewed_on": null,
+  "call_emergency_first": true,
+  "steps": [
+    {
+      "n": 1,
+      "text_key": "Call 112 immediately for falls from height, vehicular impact, severe deformity, or inability to move limbs",
+      "icon": "phone"
+    },
+    {
+      "n": 2,
+      "text_key": "Check for responsiveness and clear breathing without moving the patient's head or spine",
+      "icon": "user-check"
+    },
+    {
+      "n": 3,
+      "text_key": "Keep the patient completely still: stabilize the head and neck in the position found using your hands on both sides",
+      "icon": "shield"
+    },
+    {
+      "n": 4,
+      "text_key": "Control any life-threatening external bleeding with direct pressure, taking care not to push on bone fragments",
+      "icon": "hand"
+    },
+    {
+      "n": 5,
+      "text_key": "Support deformed or fractured limbs in the position found using soft padding, rolled blankets, or pillows on either side",
+      "icon": "activity"
+    },
+    {
+      "n": 6,
+      "text_key": "Keep the patient warm and calm, monitoring consciousness continuously until paramedics arrive",
+      "icon": "heart"
+    }
+  ],
+  "do_not": [
+    "Do not move the patient unless there is immediate danger to life (fire, structural collapse, explosion)",
+    "Do not attempt to realign, straighten, or force a deformed limb or joint back into place",
+    "Do not push exposed bone ends back under the skin in an open fracture",
+    "Do not allow the patient to stand up, walk, or sit upright after a high-impact fall"
+  ],
+  "disclaimer_key": "demo_unreviewed_guidance"
+}
