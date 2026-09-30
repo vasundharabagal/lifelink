@@ -1,36 +1,60 @@
+import { useCallback } from 'react';
+import { usePolling } from './lib/usePolling';
+import { DiagnosticsCard, HealthData } from './components/DiagnosticsCard';
+import { ReconnectionBanner } from './components/ReconnectionBanner';
+import { PhoneCall, ShieldCheck } from 'lucide-react';
 
 export default function App() {
+  const fetchHealth = useCallback(async (signal: AbortSignal): Promise<HealthData> => {
+    const res = await fetch('/api/v1/health', { signal });
+    if (!res.ok) {
+      throw new Error(`Health check returned status ${res.status}`);
+    }
+    return res.json();
+  }, []);
+
+  const { data, latencyMs, pollCount, error, isReconnecting, refetch } = usePolling<HealthData>(
+    fetchHealth,
+    { intervalMs: 2000, backgroundIntervalMs: 5000 }
+  );
+
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center p-6 bg-slate-50 text-slate-900">
-      <div className="max-w-md w-full bg-white rounded-2xl shadow-sm border border-slate-200 p-8 text-center space-y-6">
-        <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-red-50 text-red-600 border border-red-100 font-bold text-2xl">
-          LL
-        </div>
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900">
-            LIFELINK Walking Skeleton
-          </h1>
-          <p className="mt-2 text-sm text-slate-600">
-            Emergency Response Coordination Layer
-          </p>
-        </div>
-        <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 text-left space-y-2 text-sm">
-          <div className="flex justify-between items-center">
-            <span className="text-slate-500 font-medium">Core Stack:</span>
-            <span className="font-semibold text-slate-800">React 19 + FastAPI</span>
+    <div className="min-h-screen bg-slate-100 flex flex-col justify-between antialiased">
+      {/* Non-blocking top reconnection banner (D-06) */}
+      <ReconnectionBanner isReconnecting={isReconnecting} />
+
+      {/* Main Body */}
+      <div className="flex-1 flex flex-col items-center justify-center p-4 sm:p-8">
+        {/* Safety Header Callout */}
+        <div className="w-full max-w-xl mb-4 flex items-center justify-between bg-white/80 backdrop-blur px-4 py-2.5 rounded-2xl border border-slate-200 text-xs">
+          <div className="flex items-center space-x-2 text-slate-700">
+            <ShieldCheck className="w-4 h-4 text-emerald-600" />
+            <span className="font-semibold">Dual-Track Emergency Network</span>
           </div>
-          <div className="flex justify-between items-center">
-            <span className="text-slate-500 font-medium">Platform:</span>
-            <span className="font-semibold text-slate-800">Vercel Serverless</span>
-          </div>
-          <div className="flex justify-between items-center">
-            <span className="text-slate-500 font-medium">Status:</span>
-            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800">
-              Scaffolded
-            </span>
-          </div>
+          <a
+            href="tel:112"
+            className="inline-flex items-center space-x-1.5 px-3 py-1 bg-red-600 text-white rounded-lg font-bold hover:bg-red-700 transition-colors shadow-sm"
+          >
+            <PhoneCall className="w-3.5 h-3.5" />
+            <span>Call 112</span>
+          </a>
         </div>
+
+        {/* Diagnostics Card (D-05) */}
+        <DiagnosticsCard
+          data={data}
+          latencyMs={latencyMs}
+          pollCount={pollCount}
+          error={error}
+          isReconnecting={isReconnecting}
+          onRefresh={refetch}
+        />
       </div>
-    </main>
+
+      {/* Persistent Footer */}
+      <footer className="py-4 text-center text-xs text-slate-500 border-t border-slate-200 bg-white/50">
+        LIFELINK Emergency Dispatch Coordinator &copy; 2026 &bull; Strict Light-Theme WCAG AA Design System
+      </footer>
+    </div>
   );
 }
