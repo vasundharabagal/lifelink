@@ -185,13 +185,29 @@ Plans:
 4. Review card displays triage preview and submits emergency request with client-generated idempotency key
 5. Offline banner and protocol guidance cards render seamlessly when device network is disconnected
 
-**Plans:** TBD
+**Plans:** 3/3 plans ready
 
 Plans:
 
+**Wave 1**
+
 - [ ] 06-01: Build light-theme design system, layout shell, auth screens, and API polling client
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 06-02: Implement press-and-hold SosButton, persistent Call 112 control, and triage question steps
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
 - [ ] 06-03: Build review preview card, submission handler, and offline protocol guidance viewer
+
+**Cross-cutting constraints:**
+- "React app renders strict light-theme design system with WCAG AA compliant contrast (≥4.5:1 text), touch targets ≥48×48px, and system typography (CITIZEN-01, UI-SPEC §1-§4)"
+- "Call 112 button remains permanently visible and functional offline via direct tel:112 link on all citizen emergency screens (CITIZEN-02, Master Spec §0, §9.1)"
+- "The tel:112 control displays device/dialer dependency and never claims or implies an emergency call was placed during demo mode (D-10, Master Spec §13.2)"
+- "If GPS is denied or unavailable, fallback DEMO_CENTER_LAT/LNG is visually explicit and labelled 'Demo location used — GPS unavailable', never implying real GPS (D-07, User Correction 3)"
+- "Browser geolocation is initiated immediately on /sos mount to pre-warm cache, displaying real accuracy or 'Accuracy unavailable' (D-05, D-08, User Correction 1)"
+- "All form inputs are preserved in SosDraftContext with sessionStorage persistence across accidental refreshes or mobile app switching (D-02)"
 
 ### Phase 7: Responder and ambulance consoles
 

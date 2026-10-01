@@ -2,14 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: ready_to_plan
-stopped_at: Phase 6 UI-SPEC approved
-last_updated: "2026-10-01T12:09:00.000Z"
-last_activity: 2026-10-01 -- Phase 6 UI-SPEC approved (UI design contract generated)
+status: ready_to_execute
+stopped_at: Phase 6 planned (3 plans ready)
+last_updated: "2026-10-01T12:20:00.000Z"
+last_activity: 2026-10-01 -- Phase 6 planned (3 plans ready: foundation & auth, SOS button & triage questions, review card & offline protocols)
 progress:
   total_phases: 12
   completed_phases: 6
-  total_plans: 18
+  total_plans: 21
   completed_plans: 18
   percent: 55
 ---
@@ -21,14 +21,14 @@ progress:
 See: `.planning/PROJECT.md` (updated 2026-09-30)
 
 **Core value:** The explainable, safety-gated coordination layer that runs beside official emergency services and turns verified nearby people into an accountable first-response network, delivering immediate community first-aid guidance and deterministic dual-track response within strict safety boundaries.  
-**Current focus:** Phase 5 completed, ready for UAT verification or Phase 6
+**Current focus:** Phase 6 planned, ready to execute Wave 1 (foundation and layout)
 
 ## Current Position
 
-Phase: 5 of 11 (Emergency lifecycle, state machine, offers, lazy advance) - EXECUTED
-Plan: 3/3 plans complete
-Status: Executed, ready for verification
-Last activity: 2026-10-01 -- Phase 5 complete (3/3 plans: creation & dedup, lazy advance & row locks, offer lifecycle & privacy & walkthrough)
+Phase: 6 of 11 (Frontend foundation and citizen SOS flow) - PLANNED
+Plan: 0/3 plans complete (3 plans ready)
+Status: Ready to execute
+Last activity: 2026-10-01 -- Phase 6 planned (3 plans ready: foundation & auth, SOS button & triage questions, review card & offline protocols)
 
 Progress: [██████░░░░] 55%
 
