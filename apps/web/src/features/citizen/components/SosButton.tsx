@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { SOS_BUTTON_ARIA } from '../../../lib/strings';
 
 interface SosButtonProps {

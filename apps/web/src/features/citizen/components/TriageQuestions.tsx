@@ -42,7 +42,6 @@ export function TriageQuestions() {
   return (
     <div className="flex flex-col gap-4">
       {QUESTIONS.map(({ id, label, field }) => {
-        const current = draft[field] as TriState;
         return (
           <div
             key={id}
@@ -56,10 +55,6 @@ export function TriageQuestions() {
               id={`triage-${id}`}
             >
               {OPTIONS.map(({ label: optLabel, value }) => {
-                const isSelected =
-                  current === value ||
-                  // null matches "Not sure"
-                  (current === null && value === null && current !== undefined);
                 const actuallySelected = draft[field] === value;
 
                 return (

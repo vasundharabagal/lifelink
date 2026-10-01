@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { ArrowLeft, Send, AlertCircle, Edit3 } from 'lucide-react';
 import { useSosDraft } from '../../../context/SosDraftContext';
 import { api, ApiError } from '../../../lib/api';
-import { ReviewCard, TriageResult } from '../components/ReviewCard';
+import { ReviewCard } from '../components/ReviewCard';
 import { DuplicateModal, DuplicateData } from '../components/DuplicateModal';
 import { Button } from '../../../components/ui/Button';
 import { Call112Button } from '../../../components/layout/Call112Button';

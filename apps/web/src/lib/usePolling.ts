@@ -32,7 +32,7 @@ export function usePolling<T>(
   const [isReconnecting, setIsReconnecting] = useState<boolean>(false);
 
   const consecutiveFailuresRef = useRef<number>(0);
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
   const isMountedRef = useRef<boolean>(true);
 

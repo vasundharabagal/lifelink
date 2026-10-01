@@ -9,6 +9,9 @@ import { SosHomePage } from './features/citizen/pages/SosHomePage';
 import { SosTypePage } from './features/citizen/pages/SosTypePage';
 import { SosQuestionsPage } from './features/citizen/pages/SosQuestionsPage';
 import { SosDetailsPage } from './features/citizen/pages/SosDetailsPage';
+import { SosReviewPage } from './features/citizen/pages/SosReviewPage';
+import { LiveEmergencyPlaceholder } from './features/citizen/pages/LiveEmergencyPlaceholder';
+import { ProtocolsPage } from './features/protocols/pages/ProtocolsPage';
 import { DiagnosticsCard, HealthData } from './components/DiagnosticsCard';
 import { ReconnectionBanner } from './components/ReconnectionBanner';
 import { usePolling } from './lib/usePolling';
@@ -68,6 +71,9 @@ export default function App() {
               <Route path="/sos/type" element={<SosTypePage />} />
               <Route path="/sos/questions" element={<SosQuestionsPage />} />
               <Route path="/sos/details" element={<SosDetailsPage />} />
+              <Route path="/sos/review" element={<SosReviewPage />} />
+              <Route path="/emergency/:id" element={<LiveEmergencyPlaceholder />} />
+              <Route path="/protocols" element={<ProtocolsPage />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </main>

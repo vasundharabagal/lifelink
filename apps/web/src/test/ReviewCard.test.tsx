@@ -38,7 +38,7 @@ const defaultDraft = {
   description: 'Cut on arm with severe bleeding',
   lat: 19.076,
   lng: 72.8777,
-  accuracy_m: 20,
+  accuracy_m: 20 as number | null,
   isFallbackLocation: false,
   landmark: 'Gate 4, Ground Floor',
   idempotencyKey: 'review-uuid-1234',

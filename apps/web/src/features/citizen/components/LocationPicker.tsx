@@ -34,7 +34,7 @@ export function LocationPicker() {
       if (mapRef.current) return; // Already initialized
 
       // Fix default icon paths for Vite
-      delete (L.Icon.Default.prototype as Record<string, unknown>)._getIconUrl;
+      delete (L.Icon.Default.prototype as unknown as Record<string, unknown>)._getIconUrl;
       L.Icon.Default.mergeOptions({
         iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
         iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
