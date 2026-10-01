@@ -5,6 +5,10 @@ import { OfflineBanner } from './components/layout/OfflineBanner';
 import { Call112Button } from './components/layout/Call112Button';
 import { LoginPage } from './features/auth/pages/LoginPage';
 import { RegisterPage } from './features/auth/pages/RegisterPage';
+import { SosHomePage } from './features/citizen/pages/SosHomePage';
+import { SosTypePage } from './features/citizen/pages/SosTypePage';
+import { SosQuestionsPage } from './features/citizen/pages/SosQuestionsPage';
+import { SosDetailsPage } from './features/citizen/pages/SosDetailsPage';
 import { DiagnosticsCard, HealthData } from './components/DiagnosticsCard';
 import { ReconnectionBanner } from './components/ReconnectionBanner';
 import { usePolling } from './lib/usePolling';
@@ -59,8 +63,11 @@ export default function App() {
               <Route path="/" element={<DashboardPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
-              {/* SOS flow routes — placeholder for Wave 2 */}
-              <Route path="/sos/*" element={<Navigate to="/" replace />} />
+              {/* SOS flow routes */}
+              <Route path="/sos" element={<SosHomePage />} />
+              <Route path="/sos/type" element={<SosTypePage />} />
+              <Route path="/sos/questions" element={<SosQuestionsPage />} />
+              <Route path="/sos/details" element={<SosDetailsPage />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </main>
