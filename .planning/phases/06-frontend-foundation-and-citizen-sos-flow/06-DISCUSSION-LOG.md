@@ -45,7 +45,7 @@
 | You decide | Agent discretion | |
 
 **User's choice:** Dual actions on confirmation sheet (`[Add Details / Guided Triage]` and `[Send Now (Instant Fast Dispatch)]`)  
-**Notes:** Supports both structured triage for bystander scenarios and instant fast-dispatch for extreme panic.
+**Notes:** Supports both structured triage for bystander scenarios and instant fast-dispatch for extreme panic. Fast Dispatch MUST execute the full existing backend safety pipeline (Create emergency → deterministic triage rules → Phase 4 eligibility/filtering → Phase 4 scoring/ranking → parallel community/professional dispatch → offer/cascade), never directly dispatching the nearest responder or bypassing Phase 3/4 safety/orchestration logic.
 
 ---
 
@@ -77,16 +77,16 @@
 | You decide | Agent discretion | |
 
 **User's choice:** Default to configured center coordinates (`DEMO_CENTER_LAT/LNG`) with amber badge without blocking  
-**Notes:** Never blocks an emergency dispatch in a panic scenario if permissions are denied.
+**Notes:** If GPS is denied/unavailable, fallback coordinates are visually explicit and labelled as "Demo location used — GPS unavailable", never implying that it is the user's real location.
 
 | Option | Description | Selected |
 |--------|-------------|----------|
-| Accuracy & privacy card | Display accuracy indicator (`±10m`) and privacy guarantee badge (exact location revealed only to accepted responder) | ✓ |
+| Accuracy & privacy card | Display dynamic browser accuracy or 'Accuracy unavailable', distinguish demo/fallback from real GPS, and show privacy guarantee badge | ✓ |
 | Minimal location pill | Coordinates only without privacy notice | |
 | You decide | Agent discretion | |
 
-**User's choice:** Display location card with accuracy indicator and privacy guarantee badge  
-**Notes:** Reassures citizen on privacy safeguards per Master Spec §11.
+**User's choice:** Display location card with dynamic accuracy indicator and privacy guarantee badge  
+**Notes:** Displays browser-provided geolocation accuracy when available or 'Accuracy unavailable'. In demo mode, clearly distinguishes simulated/fallback location from real GPS via distinct badges. Reassures citizen on privacy safeguards per Master Spec §11.
 
 ---
 
@@ -108,7 +108,7 @@
 | You decide | Agent discretion | |
 
 **User's choice:** Persistent high-visibility amber banner below header  
-**Notes:** Keeps both Call 112 and protocol guidance immediately accessible without blocking navigation.
+**Notes:** Keeps both Call 112 and protocol guidance immediately accessible without blocking navigation. The offline `tel:112` action is device/environment dependent (requires OS telephony capability), and the application must never claim or imply that an emergency call was actually placed during demo mode.
 
 | Option | Description | Selected |
 |--------|-------------|----------|
