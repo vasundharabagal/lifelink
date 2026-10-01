@@ -2,9 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Leaflet CSS */
-@import 'leaflet/dist/leaflet.css';
-
 :root {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   color-scheme: light;

@@ -22,5 +22,6 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: ['./src/test/setup.ts'],
+    css: false, // Skip CSS processing in tests — prevents Leaflet CSS / Tailwind hangs
   },
 });

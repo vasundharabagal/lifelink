@@ -1,15 +1,20 @@
-import { useCallback } from 'react';
-import { usePolling } from './lib/usePolling';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import { Header } from './components/layout/Header';
+import { OfflineBanner } from './components/layout/OfflineBanner';
+import { Call112Button } from './components/layout/Call112Button';
+import { LoginPage } from './features/auth/pages/LoginPage';
+import { RegisterPage } from './features/auth/pages/RegisterPage';
 import { DiagnosticsCard, HealthData } from './components/DiagnosticsCard';
 import { ReconnectionBanner } from './components/ReconnectionBanner';
-import { PhoneCall, ShieldCheck } from 'lucide-react';
+import { usePolling } from './lib/usePolling';
+import { useCallback } from 'react';
+import { ShieldCheck } from 'lucide-react';
 
-export default function App() {
+function DashboardPage() {
   const fetchHealth = useCallback(async (signal: AbortSignal): Promise<HealthData> => {
     const res = await fetch('/api/v1/health', { signal });
-    if (!res.ok) {
-      throw new Error(`Health check returned status ${res.status}`);
-    }
+    if (!res.ok) throw new Error(`Health check returned status ${res.status}`);
     return res.json();
   }, []);
 
@@ -19,42 +24,56 @@ export default function App() {
   );
 
   return (
-    <div className="min-h-screen bg-slate-100 flex flex-col justify-between antialiased">
-      {/* Non-blocking top reconnection banner (D-06) */}
+    <div className="flex-1 flex flex-col items-center justify-center p-4 sm:p-8 pb-24">
       <ReconnectionBanner isReconnecting={isReconnecting} />
-
-      {/* Main Body */}
-      <div className="flex-1 flex flex-col items-center justify-center p-4 sm:p-8">
-        {/* Safety Header Callout */}
-        <div className="w-full max-w-xl mb-4 flex items-center justify-between bg-white/80 backdrop-blur px-4 py-2.5 rounded-2xl border border-slate-200 text-xs">
-          <div className="flex items-center space-x-2 text-slate-700">
-            <ShieldCheck className="w-4 h-4 text-emerald-600" />
-            <span className="font-semibold">Dual-Track Emergency Network</span>
-          </div>
-          <a
-            href="tel:112"
-            className="inline-flex items-center space-x-1.5 px-3 py-1 bg-red-600 text-white rounded-lg font-bold hover:bg-red-700 transition-colors shadow-sm"
-          >
-            <PhoneCall className="w-3.5 h-3.5" />
-            <span>Call 112</span>
-          </a>
+      {/* Safety Header Callout */}
+      <div className="w-full max-w-xl mb-4 flex items-center justify-between bg-white/80 backdrop-blur px-4 py-2.5 rounded-2xl border border-slate-200 text-xs">
+        <div className="flex items-center space-x-2 text-slate-700">
+          <ShieldCheck className="w-4 h-4 text-emerald-600" />
+          <span className="font-semibold">Dual-Track Emergency Network</span>
         </div>
-
-        {/* Diagnostics Card (D-05) */}
-        <DiagnosticsCard
-          data={data}
-          latencyMs={latencyMs}
-          pollCount={pollCount}
-          error={error}
-          isReconnecting={isReconnecting}
-          onRefresh={refetch}
-        />
       </div>
-
-      {/* Persistent Footer */}
-      <footer className="py-4 text-center text-xs text-slate-500 border-t border-slate-200 bg-white/50">
-        LIFELINK Emergency Dispatch Coordinator &copy; 2026 &bull; Strict Light-Theme WCAG AA Design System
-      </footer>
+      <DiagnosticsCard
+        data={data}
+        latencyMs={latencyMs}
+        pollCount={pollCount}
+        error={error}
+        isReconnecting={isReconnecting}
+        onRefresh={refetch}
+      />
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <AuthProvider>
+        {/* App shell */}
+        <div className="min-h-screen bg-slate-100 flex flex-col antialiased">
+          <Header />
+          <OfflineBanner />
+
+          <main className="flex-1 flex flex-col">
+            <Routes>
+              <Route path="/" element={<DashboardPage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/register" element={<RegisterPage />} />
+              {/* SOS flow routes — placeholder for Wave 2 */}
+              <Route path="/sos/*" element={<Navigate to="/" replace />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </main>
+
+          {/* Persistent footer */}
+          <footer className="py-4 text-center text-xs text-slate-500 border-t border-slate-200 bg-white/50 pb-24">
+            LIFELINK Emergency Dispatch Coordinator &copy; 2026 &bull; Strict Light-Theme WCAG AA Design System
+          </footer>
+
+          {/* Non-network emergency control — always present */}
+          <Call112Button />
+        </div>
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
