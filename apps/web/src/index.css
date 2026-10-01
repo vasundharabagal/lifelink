@@ -2,9 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Leaflet CSS */
+@import 'leaflet/dist/leaflet.css';
+
 :root {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   color-scheme: light;
+  font-size: 16px;
 }
 
 body {
@@ -18,4 +22,25 @@ body {
 
 #root {
   width: 100%;
+}
+
+/* Focus ring utility — WCAG AA high-contrast focus indicator */
+.focus-ring {
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2;
+}
+
+/* Minimum touch target enforcement */
+.touch-target {
+  min-height: 48px;
+  min-width: 48px;
+}
+
+/* Leaflet overrides for LIFELINK light theme */
+.leaflet-container {
+  border-radius: 0.75rem;
+  font-family: inherit;
+}
+
+.leaflet-control-attribution {
+  font-size: 10px;
 }
